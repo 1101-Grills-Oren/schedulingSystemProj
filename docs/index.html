@@ -372,13 +372,15 @@
 		function px(v) {
         return `${v}px`;
       }
+	document.scheduleOptions=[]
 	if(document.cookie.indexOf('settings_scheduling')==-1){
 		setCookie('settings_scheduling',"")
+	}else{
+		getCookie("settings_scheduling",function(response){document.scheduleOptions.push(...decodeSchedulingOptions(response.value))})
 	}
 	if(document.cookie.indexOf('tasks')==-1){
 		setCookie('tasks',"")
 	}
-	document.scheduleOptions=[]
 	function addSchedulingOption(obj){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
 		getCookie("settings_scheduling",function(response){
@@ -430,7 +432,7 @@
 
         return { x, y };
       }
-	getCookie("settings_scheduling",function(response){document.scheduleOptions.push(...decodeSchedulingOptions(response.value))})
+	
 	function convertFromDatesToSchedulingOptions(date1,date2,time,numAhead,task){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
 		currentTime=new Date().getTime()
