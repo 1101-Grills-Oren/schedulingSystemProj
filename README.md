@@ -1,7 +1,7 @@
 # schedulingSystemProj
 A digital planner. Instructions for how to use below.
 
-Goto <link> (which is not currently set up)
+Goto <a href="https://raw.githubusercontent.com/1101-Grills-Oren/schedulingSystemProj/refs/heads/main/main.html">the main file<\a> (which is not currently set up)
 Use!
 To add a task, set the name, date and time using the input boxes at the top. Then press the 'add task' button.
 To remove a task, {code incomplete} {goal: add a delete button and a confirm dialog next to each task, shift-click to skip dialog.}
