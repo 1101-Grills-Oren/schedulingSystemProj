@@ -372,15 +372,13 @@
 		function px(v) {
         return `${v}px`;
       }
-	document.scheduleOptions=[]
 	if(document.cookie.indexOf('settings_scheduling')==-1){
 		setCookie('settings_scheduling',"")
-	}else{
-		getCookie("settings_scheduling",function(response){document.scheduleOptions.push(...decodeSchedulingOptions(response.value))})
 	}
 	if(document.cookie.indexOf('tasks')==-1){
 		setCookie('tasks',"")
 	}
+	document.scheduleOptions=[]
 	function addSchedulingOption(obj){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
 		getCookie("settings_scheduling",function(response){
@@ -432,7 +430,7 @@
 
         return { x, y };
       }
-	
+	getCookie("settings_scheduling",function(response){document.scheduleOptions.push(...decodeSchedulingOptions(response.value))})
 	function convertFromDatesToSchedulingOptions(date1,date2,time,numAhead,task){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
 		currentTime=new Date().getTime()
@@ -589,8 +587,8 @@
 					}
 						
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*21+115)]},500)
-						document.todochange.push([x[i],px(objcount*21+115)])
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20.5+115)]},500)
+						document.todochange.push([x[i],px(objcount*20.5+115)])
 						setTimeout(() => (document.todochange[document.todochange.length-1][0].style.top=document.todochange.pop()[1]),100)
 					}
 				}else{
@@ -601,8 +599,8 @@
 						solidObjCount++
 					}else{
 						setTimeout(() => (document.todochange[document.todochange.length-1][0].style.top=document.todochange.pop()[1]),100)
-						document.todochange.push([x[i],px(objcount*21+115)])
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*21+115)]},500)
+						document.todochange.push([x[i],px(objcount*20.5+115)])
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20.5+115)]},500)
 					}
 				}
 				}
@@ -922,8 +920,9 @@
 	  </button>
   </span>
 	<span class="settings_menu" id="settings_menu">
+		Menu Under Construction
 		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
-			test
+			Incomplete menu!
 		</span>
 
 
@@ -946,112 +945,8 @@
 </html>
 
 
-<!--iframe id="my_iframe" style="display:none;"></iframe>
-<script>
-function Download(url) {
-    document.getElementById('my_iframe').src = url;
-};
-</script>
-
-
-
-
-
-
-
-
-
-
-
-The js:
-
-const dropArea = document.getElementById('drop-area');
-const fileInput = document.getElementById('file-input');
-
-// Utility function to prevent default browser behavior
-function preventDefaults(e) {
-  e.preventDefault();
-  e.stopPropagation();
-}
-
-// Preventing default browser behavior when dragging a file over the container
-dropArea.addEventListener('dragover', preventDefaults);
-dropArea.addEventListener('dragenter', preventDefaults);
-dropArea.addEventListener('dragleave', preventDefaults);
-
-// Handling dropping files into the area
-dropArea.addEventListener('drop', handleDrop);
-
-// We’ll discuss `handleDrop` function down the road
-function handleDrop(e) { /* ... */ }
-
-
-
-
-
-dropArea.addEventListener('dragover', () => {
-  dropArea.classList.add('drag-over');
-});
-
-dropArea.addEventListener('dragleave', () => {
-  dropArea.classList.remove('drag-over');
-});
-
-
-
-
-
-function handleDrop(e) {
-  e.preventDefault();
-
-  // Getting the list of dragged files
-  const files = e.dataTransfer.files;
-
-  // Checking if there are any files
-  if (files.length) {
-    // Assigning the files to the hidden input from the first step
-    fileInput.files = files;
-
-    // Processing the files for previews (next step)
-    handleFiles(files);
-  }
-}
-
-// We’ll discuss `handleFiles` function down the road
-function handleFiles(files) { /* ... */ }
-
-
-
-
-function handleFiles(files) {
-  for (const file of files) {
-    // Initializing the FileReader API and reading the file
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    // Once the file has been loaded, fire the processing
-    reader.onloadend = function (e) {
-      const preview = document.createElement('img');
-
-      if (isValidFileType(file)) {
-        preview.src = e.target.result;
-      }
-
-      // Apply styling
-      preview.classList.add('preview-image');
-      const previewContainer = document.getElementById('preview-container');
-      previewContainer.appendChild(preview);
-    };
-  }
-}
-
-// We’ll discuss `isValidFileType` function down the road
-function isValidFileType() {
-  return true;
-}
-
-
-function isValidFileType(file) {
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-  return allowedTypes.includes(file.type);
-}-->
+<!--
+Bugs!
+date markers do not shift properly with window resizes
+duplicate date markers cause large stacks!
+-->
