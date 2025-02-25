@@ -664,11 +664,11 @@
 		}
 	//console.log(cookieStore.getAll())
 	function getCookie(name,thendo){
-		document.cookieStore.get(name).then(response=>{thendo(response);})
-		return document.x
+		thendo({value:localStorage[name]});
+		return localStorage[name]
 	}
 	function setCookie(name,value){
-		document.cookieStore.set({name:name,value:value,sameSite:"strict",secure:false,expires: new Date().getTime()+100000000000})
+		localStorage[name]=''+value
 	}
 	function updateCookie(name,addedValue){
 		getCookie(name,function(response){
