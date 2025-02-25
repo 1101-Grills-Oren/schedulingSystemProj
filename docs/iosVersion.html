@@ -383,10 +383,10 @@
 		function px(v) {
         return `${v}px`;
       }
-	if(document.cookie.indexOf('settings_scheduling')==-1){
+	if(localStorage['settings_scheduling']==undefined){
 		setCookie('settings_scheduling',"")
 	}
-	if(document.cookie.indexOf('tasks')==-1){
+	if(localStorage['tasks']==undefined){
 		setCookie('tasks',"")
 	}
 	document.scheduleOptions=[]
