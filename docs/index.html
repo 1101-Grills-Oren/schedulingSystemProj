@@ -1,4 +1,1055 @@
 <!DOCTYPE html>
-<html>
-  testing
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assignments</title>
+	<style>
+		.seperator{
+			width:98%;
+			text-align:center;
+			border-bottom:1px solid #adadad;
+			line-height:0.1em;
+			margin: 10px 0 20px;
+			background-color:#fff;
+			position: absolute;
+		}
+		.seperator2{
+			background-color:#fff;
+			padding:0 5px
+		}
+		.settings_button{
+			height: auto;
+			width: auto;
+			position: fixed;
+			top: 10px;
+			right: 10px;
+			z-index: 50;
+			display: block;
+			background-color:#F9F9F9;
+			border-color:#FFF;
+			
+			
+		}
+		.settings_menu{
+			height: 220px;
+			width: 300px;
+			position: fixed;
+			top: 30px;
+			right: 10px;
+			z-index: 51;
+			display: block;
+			background-color:#F9F9F9;
+			border-color:#FFF;
+			clip-path:margin-box;
+			
+		}
+		.document_container{
+			position:absolute;
+			top:0px;
+			left:10px;
+			right:10px;
+			bottom:0px;
+			height:"px(window.innerHeight)";
+			width:"px(window.innerWidth)";
+			
+		}
+		@keyframes anim_1_1{
+			from {top:0px}
+			to {top:-170px}
+		}
+		.animation_1_part_1{
+			animation: anim_1_1 10s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_2{
+			from {top:170px}
+			to {top:0px}
+		}
+		.animation_1_part_2{
+			animation: anim_1_2 10s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_3{
+			from {top:340px}
+			to {top:170px}
+		}
+		.animation_1_part_3{
+			animation: anim_1_3 10s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+
+
+
+
+
+		@keyframes anim_1_4{
+			from {left:-170px}
+			to {left:0px}
+		}
+		.animation_1_part_4{
+			animation: anim_1_4 9s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_5{
+			from {left:0px}
+			to {left:170px}
+		}
+		.animation_1_part_5{
+			animation: anim_1_5 9s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_6{
+			from {left:170px}
+			to {left:340px}
+		}
+		.animation_1_part_6{
+			animation: anim_1_6 9s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+
+
+
+
+
+
+
+
+
+
+
+		@keyframes anim_1_7{
+			from {left:-170px; top:-170px}
+			to {left:0px; top:0px}
+		}
+		.animation_1_part_7{
+			animation: anim_1_7 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_8{
+			from {left:0px;top:-170px}
+			to {left:170px; top:0px}
+		}
+		.animation_1_part_8{
+			animation: anim_1_8 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_9{
+			from {left:170px;top:-170px}
+			to {left:340px; top:0px}
+		}
+		.animation_1_part_9{
+			animation: anim_1_9 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		
+		@keyframes anim_1_10{
+			from {left:-170px; top:0px}
+			to {left:0px; top:170px}
+		}
+		.animation_1_part_10{
+			animation: anim_1_10 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_11{
+			from {left:0px; top:0px}
+			to {left:170px; top:170px}
+		}
+		.animation_1_part_11{
+			animation: anim_1_11 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		@keyframes anim_1_12{
+			from {left:170px; top:0px}
+			to {left:340px; top:170px}
+		}
+		.animation_1_part_12{
+			animation: anim_1_12 11s linear 0s infinite normal;
+			position:absolute;
+			
+		}
+		
+		
+	</style>
+</head>
+<body>
+	<span id="assignments_main" onclick="settingsFadeOut();" class="document_container">
+  <h1>Assignments</h1>
+	
+	  <input type="text" id="taskName" placeholder="Task Name" required>
+	  <input type="date" id="date" placeholder="Date" required>
+	  <input type="time" id="time" placeholder="Time" required>
+	  <input id="clickMe" type="button" value="clickme" onclick="updateCookie('tasks',btoa('complete:false#task:'+document.getElementById('taskName').value+'#date:'+document.getElementById('date').value+'#time:'+document.getElementById('time').value.replaceAll(':','*')));cookieCount++;objcount++;addTask({index:cookieCount,complete:false,task:document.getElementById('taskName').value,date:document.getElementById('date').value,time:document.getElementById('time').value.replaceAll(':','*')});replaceTasks();" >
+	<p id="assigncontainer" ><p id="assign" ></p></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<span id=''></h2>
+	  <script>
+		  document.globalinternalvariables=
+			  {noTasksMessage:"No tasks."}
+		  document.settingsVisible=false
+		  function settingsFadeIn(){
+			  if(document.settingsVisible==false){
+			  document.body.appendChild(document.settings_menu)
+			  document.settings_menu.animate({ 'opacity': [0,1]},1000)
+				  setTimeout(() => {document.settingsVisible=true}, 1001);
+			  }
+		  }
+		  function settingsFadeOut(){
+			  if(document.settingsVisible==true){
+			  document.settings_menu.animate({ 'opacity': [1,0]},1000)
+			  setTimeout(() => document.settings_menu.remove(), 990);
+				setTimeout(() => {document.settingsVisible=false}, 1);
+			  }
+		  }
+		  function settingsSchedulingFadeIn(){
+			  if(document.settingsVisible&&(false==document.settingsSchedulingVisible)){
+			  document.settings_menu.children[0].style.height="600px"
+			  document.settings_menu.children[0].animate({ 'height': ["0px","600px"]},1000)
+				  setTimeout(() => {document.settingsSchedulingVisible=true}, 1001);
+			  }
+		  }
+		  function settingsSchedulingFadeOut(){
+			  if(document.settingsVisible&&document.settingsSchedulingVisible){
+			  document.settings_menu.children[0].animate({ 'height': ["600px","0px"]},1000)
+			  document.settings_menu.children[0].style.height="0px";
+				  
+				setTimeout(() => {document.settingsSchedulingVisible=false}, 1);
+			  }
+		  }
+	  </script>
+	  <script id="notmine">
+		  function quakeElement(element){
+			  earthQuake({ 
+              el: element,
+              animationOption: 'shaky'
+            });
+			  element.children[1].textContent+=" - OVERDUE"
+			  lerpOverdue(element)
+			  z=element.dataset
+			  day=new Date()
+		r=z['date'].split('-')
+		x=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
+		y=day.setFullYear(r[0],r[1],r[2])
+			  //if(x<y){
+			//	  setTimeout(() => moveTo(args.el,element.x,element.y-25),500);
+			  //setTimeout(() => quakeElement(element), 501)
+			//	  ;}
+		  }
+		  function lerpOverdue(element){
+			  element.animate({ 'color': ['black','red','black']},500)
+			  setTimeout(() => lerpOverdue(element), 500);
+		  }
+		  function earthQuake(args) {
+      // only launch if a current data-quake isn't defined/running
+      if (!args.el.getAttribute('data-quake')) {
+        args.el.setAttribute('data-quake', true);
+		  x=getXY(args.el)
+        applyQuake({
+          el: args.el,
+          index: 0,
+          ttl: 50,
+          delta: 0.4,
+          speedMilliseconds: 20,
+          animationOption: args['animationOption'] || parseInt(Math.random() * 2),
+          ...getXY(args.el)
+        });
+		  
+      }
+
+      function getXY(obj) {
+        let x = obj.offsetLeft,
+          y = obj.offsetTop,
+          e = obj.offsetParent;
+
+        // search until parent with relative positioning or no more parents
+        while (e != null && getComputedStyle(e).position !== 'relative') {
+          x += e.offsetLeft;
+          y += e.offsetTop;
+          e = e.offsetParent;
+        }
+
+        return { x, y };
+      }
+
+      function px(v) {
+        return `${v}px`;
+      }
+
+      function moveTo(el, x, y) {
+        el.style.left = px(x);
+        el.style.top = px(y);
+      }
+
+      function applyQuake(obj) {
+		if(obj.el.newPos!=undefined){
+			if(((obj.el.newPos.x==undefined)||(obj.el.newPos.x==""))){
+				if((obj.x==undefined)||(obj.x==10)){
+					obj.x=0
+				}
+				obj.el.newPos.x=obj.x
+			}
+			obj.el.animate({ 'left': [px(obj.x),px(obj.el.newPos.x)], 'top': [px(obj.y),(obj.el.newPos.y)]},500)
+			obj.x=obj.el.newPos.x
+			obj.y=obj.el.newPos.y
+			obj.y=obj.y.slice(0,obj.y.length-2)-1+1
+			console.log(obj.y)
+			obj.el.newPos=undefined
+		}
+        switch (obj.animationOption) {
+          case 'rotate': if (++obj.index > 8) obj.index = 1; break
+          case 'shaky': obj.index = parseInt(Math.random() * 8); break
+          case 'horizontal': obj.index += 4; if (obj.index > 8) obj.index = 0; break
+          case 'diagonal': obj.index += 5; if (obj.index > 8) obj.index = 1; break
+          case 'faster': obj.index += 2; if (obj.index > 8) obj.index = 1; break
+          default: if (!confirm('hmmm... default (error)')) obj.ttl = 0; break
+        }
+
+        let el = obj.el, x = obj.x, y = obj.y, delta = obj.delta;
+        switch (obj.index) {
+          case 1: moveTo(el, x - delta, y - delta); break;
+          case 2: moveTo(el, x, y - delta); break;
+          case 3: moveTo(el, x + delta, y - delta); break;
+          case 4: moveTo(el, x + delta, y); break;
+          case 5: moveTo(el, x + delta, y + delta); break;
+          case 6: moveTo(el, x, y + delta); break;
+          case 7: moveTo(el, x - delta, y + delta); break;
+          case 8: moveTo(el, x - delta, y); break;
+        }
+		document.o=obj
+		z=obj.el.dataset
+		day=new Date()
+		r=z['date'].split('-')
+		x=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
+		y=day.setFullYear(r[0],r[1],r[2])
+        if ((--obj.ttl > 0)||(x>y&&(document.o.el.children[0].checked==false))) {
+          setTimeout(() => applyQuake(obj), obj.speedMilliseconds);
+        } else {
+          obj.el.removeAttribute('data-quake');
+			moveTo(obj.el,obj.x,obj.y)
+			//document.o.el.children[0].animate({ 'color': ['black','white']},1000)
+			obj.el.style['opacity']=0
+			obj.el.animate({ 'opacity': [1,0]},1000)
+			setTimeout(() => obj.el.remove(),1000)
+			setTimeout(() => replaceTasks(), 1001);
+          delete obj;
+        }
+
+      }
+    }
+	  </script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+		function px(v) {
+        return `${v}px`;
+      }
+	if(document.cookie.indexOf('settings_scheduling')==-1){
+		setCookie('settings_scheduling',"")
+	}
+	if(document.cookie.indexOf('tasks')==-1){
+		setCookie('tasks',"")
+	}
+	document.scheduleOptions=[]
+	function addSchedulingOption(obj){
+		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
+		getCookie("settings_scheduling",function(response){
+			x=response.value
+			if(x!=''){
+				x+=','+btoa("lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+btoa(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+			}else{
+				x=btoa("lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+btoa(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+			}
+			setCookie("settings_scheduling",x)
+		})
+		document.scheduleOptions.push(obj)
+	}
+	function decodeSchedulingOptions(opt){
+		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
+		
+			x=opt
+			if(x==''){
+				return []
+			}
+			y=x.split(',')
+			z=[]
+			y.forEach(function(arg){
+				a=atob(arg).split(',')
+				b={}
+				for(var i=0;i<a.length;i++){
+					b[a[i].split(':')[0]]=a[i].split(':')[1]
+				}
+				b['task']={}
+				b['task']['name']=b['taskName']
+				b['task']['categories']=b['taskCategories'].split(',')
+				b['taskName']=b['taskCategories']=undefined
+				z.push(b)
+			})
+			return z
+		
+	}
+	function getXY(obj) {
+        let x = obj.offsetLeft,
+          y = obj.offsetTop,
+          e = obj.offsetParent;
+
+        // search until parent with relative positioning or no more parents
+        while (e != null && getComputedStyle(e).position !== 'relative') {
+          x += e.offsetLeft;
+          y += e.offsetTop;
+          e = e.offsetParent;
+        }
+
+        return { x, y };
+      }
+	getCookie("settings_scheduling",function(response){document.scheduleOptions.push(...decodeSchedulingOptions(response.value))})
+	function convertFromDatesToSchedulingOptions(date1,date2,time,numAhead,task){
+		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
+		currentTime=new Date().getTime()
+		obj={}
+		dateInternal=new Date()
+		dateInternal.setHours(0,0,0,0)
+		obj.lastTrigger=dateInternal.setFullYear(date1.split('/')[0],date1.split('/')[1]-1,date1.split('/')[2])
+		obj.triggerDelay=dateInternal.setFullYear(date2.split('/')[0],date2.split('/')[1]-1,date2.split('/')[2])-obj.lastTrigger
+		if(obj.triggerDelay<=0){
+			return "Error. Invalid dates"
+		}
+		dateInternal.setHours(time.split(':')[0],time.split(':')[1],0,0)
+		obj.lastTrigger-=obj.triggerDelay*numAhead
+		obj.timeInFutureToSchedule=dateInternal.setFullYear(date1.split('/')[0],date1.split('/')[1]-1,date1.split('/')[2])-obj.lastTrigger
+		obj.task=task
+		return obj
+	}
+	
+	function tickSchedulingOptions(){
+		currentTime=new Date().getTime()
+		document.scheduleOptions.forEach(function(arg){
+			if(arg.lastTrigger+arg.triggerDelay<currentTime){
+				dateStuff=new Date()
+				dateStuff.setTime(arg.lastTrigger+arg.timeInFutureToSchedule)
+				arg.lastTrigger+=arg.triggerDelay
+				updateCookie('tasks',btoa('complete:false#task:'+arg['task']['name']+'#date:'+dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate())+'#time:'+dateStuff.getHours()+'*'+dateStuff.getMinutes()));
+				addTask({'task':arg['task']['name'],'categories':arg['task']['categories'],'date':dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate()),'time':dateStuff.getHours()+'*'+dateStuff.getMinutes(),'index':cookieCount++,'complete':false})
+				cookieCount++;
+				replaceTasks();
+				setTimeout(() =>replaceTasks(),110)
+			}
+		})
+		setTimeout(() => tickSchedulingOptions(),1000);
+	}
+		
+	cookieCount=0
+	function reorderTasksByDate(y){
+		z=[]
+		for (var i=0;i<y.length;i++){
+			if(y[i]!=undefined){
+			z[z.length]=y[i]
+			}
+		}
+		console.log(z)
+		
+		i=0
+		count=0
+		if(z[0]!=undefined){
+		while((i<z.length-1)&&(count<500)){
+			if((i>=0)&(z[i].dataset['date']!=undefined)&(z[i+1].dataset['date']!=undefined)){
+				
+				d1=z[i].dataset['date'].split('-')
+				d2=z[i+1].dataset['date'].split('-')
+				//day.setHours(t1[0],t1[1])
+				//d1=day.setFullYear(d1[0],d1[1],d1[2])
+				//day.setHours(t2[0],t2[1])
+				//d2=day.setFullYear(d2[0],d2[1],d2[2])
+				
+				if((d1[0])>(d2[0])){
+					z[i+1],z[i]=z[i],z[i+1]
+					i--
+				}else if((d1[0]==d2[0])&&((d1[1])>(d2[1]))){
+					z[i+1],z[i]=z[i],z[i+1]
+					i--
+				}else if(((d1[0]==d2[0])&&(d1[1]==d2[1])&&((d1[2])>(d2[2])))||(((d1[0]==d2[0])&&(d1[1]==d2[1])&&(d1[2]==d2[2]))&&(z[i].dataset['time']!=undefined)&&(z[i+1].dataset['time']==undefined))){
+					prev=(z[i],z[i+1])
+					z[i+1],z[i]=z[i],z[i+1]
+					if(prev==(z[i],z[i+1])){
+						r=[]
+						for(var q=0;q<i;q++){
+							r.push(z[q])
+						}
+						r.push(z[i+1])
+						r.push(z[i])
+						for(var q=i+2;q<z.length;q++){
+							r.push(z[q])
+						}
+						z=r
+					}
+					i--
+				}else{
+					i++
+				}
+			}else{
+				i++
+			}
+			count++
+		}}
+		console.log(z)
+		return z
+	}
+		function replaceTasks(){
+			if(document.getElementById('assign').children[0]!=undefined){
+			replaceTasks2()
+				if(document.getElementById('assign').children[0]!=undefined){
+				replaceTasks2()
+				}
+			}
+			if(document.getElementById('noTasksMessage')){
+					document.getElementById('noTasksMessage').remove()
+				}
+			if(document.getElementById('assign').children[0]==undefined){
+				noTasks=document.createElement("span")
+				noTasks['textContent']=document.globalinternalvariables.noTasksMessage
+				noTasks['id']="noTasksMessage"
+				document.getElementById('assigncontainer').appendChild(noTasks)
+			}
+		}
+		function replaceTasks2(){
+			objcount=0
+			x=document.getElementById('assign').children
+			if((x[0].children[1]!=undefined)){
+						date=x[0].dataset['date']
+						a=document.createElement("span")
+						y=document.createElement('span')
+						y['textContent']=date
+						a.dataset['date']=date
+						a['style']="position:absolute";
+						y['style']="position:relative";
+						a.className='seperator';
+						y.className='seperator2';
+						a.appendChild(y)
+						objcount++
+						a.style.top=px(objcount*20+20)
+						document.getElementById('assign').appendChild(a)
+				x=document.getElementById('assign').children
+				x=[x[x.length-1],...x]
+				x[x.length-1]=undefined
+					}
+			objcount=0
+			x=reorderTasksByDate(x)  
+			objcount=0
+			solidObjCount=0
+			if(document.todochange==undefined){
+				document.todochange=[]
+			}
+			for (var i=0;i<x.length;i++){
+				if(x[i].dataset&&x[i].dataset['date']!=undefined){
+				day=new Date()
+				if(x[i].dataset['date']||true){
+				r=x[i].dataset['date'].split('-')
+				a=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
+				y=day.setFullYear(r[0],r[1],r[2])
+				console.log(a)
+				console.log(y)
+				if(a>y){
+					if(x[i].children[1]!=undefined){
+					if(x[i].children[0].checked==false){
+						x[i].style.top=px(objcount*20-solidObjCount*33-objcount*2);
+						x[i].newPos={x:x[i].style.x,y:px(objcount*20-solidObjCount*33-objcount*2)}
+						//shakyObjs[shakyObjs.length]=x[i];
+						//setTimeout(() => quakeElement(shakyObjs.pop(0)), 100);
+						solidObjCount++
+					}
+						
+					}else{
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*21+115)]},500)
+						document.todochange.push([x[i],px(objcount*21+115)])
+						setTimeout(() => (document.todochange[document.todochange.length-1][0].style.top=document.todochange.pop()[1]),100)
+					}
+				}else{
+					if(x[i].children[1]!=undefined){
+						document.todochange.push([x[i],px(objcount*20-solidObjCount*33-objcount*2)])
+						setTimeout(() => (document.todochange[document.todochange.length-1][0].style.top=document.todochange.pop()[1]),100)
+						x[i].animate({'top':[x[i].style.top,px(objcount*20-solidObjCount*33-objcount*2)]},500)
+						solidObjCount++
+					}else{
+						setTimeout(() => (document.todochange[document.todochange.length-1][0].style.top=document.todochange.pop()[1]),100)
+						document.todochange.push([x[i],px(objcount*21+115)])
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*21+115)]},500)
+					}
+				}
+				}
+				if(x[x.length-1].children[1]==undefined){
+					x[x.length-1].remove()
+					objcount--
+				}
+				if(i+2<=x.length){
+					if((x[i].children[1]==undefined)&&(x[i+1].children[1]==undefined)){
+						x[i].remove()
+						objcount--
+					}
+					else if((x[i].children[1]!=undefined)&&(x[i+1].children[1]!=undefined)&&(x[i].dataset['date']!=x[i+1].dataset['date'])){
+						date=x[i+1].dataset['date']
+						a=document.createElement("span")
+						y=document.createElement('span')
+						y['textContent']=date
+						a.dataset['date']=date
+						a['style']="position:absolute";
+						y['style']="position:relative";
+						a.className='seperator';
+						y.className='seperator2';
+						a.appendChild(y)
+						objcount++
+						a.style.top=px(objcount*20+20)
+						document.getElementById('assign').appendChild(a)
+						a.animate({ 'opacity': [0,1]},1000)
+						y.animate({ 'opacity': [0,1]},1000)
+						x.push(a)			
+						
+						
+					}
+				}
+				}
+				//x[i].style.top=px(objcount*20+100)
+				objcount++
+				
+			}
+			x=reorderTasksByDate(x)
+			assignobject2=document.createElement("p")
+			assignobject2.id='assign2'
+			for(var i=0;i<x.length;i++){
+				if(x[i].dataset['date']!="undefined"){
+				assignobject2.appendChild(x[i])}
+			}
+			document.getElementById('assigncontainer').appendChild(assignobject2)
+			document.getElementById('assign').remove()
+			assignobject2.id='assign'
+			console.log(document.todochange)
+		}
+	//console.log(cookieStore.getAll())
+	function getCookie(name,thendo){
+		cookieStore.get(name).then(response=>{thendo(response);})
+		return document.x
+	}
+	function setCookie(name,value){
+		cookieStore.set({name:name,value:value,sameSite:"strict",secure:false,expires: new Date().getTime()+100000000000})
+	}
+	function updateCookie(name,addedValue){
+		getCookie(name,function(response){
+		x=response.value;
+		x=x.split(',')
+		x[x.length]=addedValue;
+		setCookie(name,x);
+		console.log(x)
+		})
+		
+	}
+	document.dateOrder=false
+	function reorderCookiesByDate(){
+		getCookie("tasks",function(response){
+		x=response.value;
+		y=x.split(',')
+		z=[]
+		y.forEach(function(arg){
+			z.push(atob(arg))
+		})
+		y=z
+		z=[]
+		for(var i=0;i<y.length;i++){
+			z[i]=y[i].split('#')
+			a={}
+			for(var j=0;j<z[i].length;j++){
+				a[z[i][j].split(':')[0]]=z[i][j].split(':')[1]
+			}
+			z[i]=a
+		}
+		i=0
+		while(i!=z.length-1){
+			if((i>=0)&(z[i]['date']!=undefined)){
+				day=new Date()
+				d1=z[i]['date'].split('-')
+				t1=z[i]['time'].split('*')
+				d2=z[i+1]['date'].split('-')
+				t2=z[i+1]['time'].split('*')
+				day.setHours(t1[0],t1[1])
+				d1=day.setFullYear(d1[0],d1[1],d1[2])
+				day.setHours(t2[0],t2[1])
+				d2=day.setFullYear(d2[0],d2[1],d2[2])
+				if(d1>d2){
+					v=z[i]
+					v2=z[i+1]
+					z[i+1]=v
+					z[i]=v2
+					i--
+				}else{
+					i++
+				}
+			}else{
+				i++
+			}
+		}
+		for(var i=0;i<z.length-1;i++){
+			if(z[i]['date']!=undefined){
+				if((new Date().setFullYear(...z[i]['date'].split('-')))<new Date().getTime()-1008000000){
+					z=z.slice(0,i).append(...z.slice(i+1))
+					i--
+				}
+			}
+		}
+		
+		for(var i=0;i<z.length;i++){
+			z[i]=Object.entries(z[i])
+			for(var j=0;j<z[i].length;j++){
+				z[i][j]=z[i][j].join(':')
+			}
+			z[i]=z[i].join('#')
+		}
+		if(z[0]==':'){
+			z[0]=''
+		}
+		//console.log(z)
+		for(var i=0;i<z.length;i++){
+			z[i]=btoa(z[i])
+		}
+		z=z.join(',')
+		
+		setCookie('tasks',z);
+		//console.log(z)
+		document.dateOrder=true
+		})
+	}
+	reorderCookiesByDate()
+	function deleteCookieIndex(name,index){
+		getCookie(name,function(response){
+		x=response.value;
+		console.log(x)
+		x=x.split(',')
+		y=x.slice(0,index)
+		y.push(...x.slice(index+1))
+		setCookie(name,y);
+		//console.log(y)
+		})
+		
+	}
+	function toggleTaskCompleted(index){
+		console.log(index)
+		getCookie('tasks',function(response){
+		x=response.value;
+		y=x.split(',')
+		z=[]
+		for(var i=0;i<y.length;i++){
+			z[i]=atob(y[i]).split('#')
+			a={}
+			for(var j=0;j<z[i].length;j++){
+				a[z[i][j].split(':')[0]]=z[i][j].split(':')[1]
+			}
+			z[i]=a
+		}
+		z[index]['complete']=(z[index]['complete'])!='true';
+			for(var i=0;i<z.length;i++){
+			z[i]=Object.entries(z[i])
+			for(var j=0;j<z[i].length;j++){
+				z[i][j]=z[i][j].join(':')
+			}
+			z[i]=z[i].join('#')
+		}
+		if(z[0]==':'){
+			z[0]=''
+		}
+		for(var i=0;i<z.length;i++){
+			z[i]=btoa(z[i])
+		}
+		//console.log(z)
+		z=z.join(',')
+		setCookie('tasks',z);
+		console.log(z)
+		})
+		
+	}
+	shakyObjs=[]
+	function addTask(z){
+		console.log(z)
+		spanObject=document.createElement("p")
+		spanObject.style="position:relative;"
+		completedBox=document.createElement("input")
+		completedBox.type="checkbox"
+		completedBox.id="taskCompletedBox"
+		spanObject.dataset['date']=z['date']
+		spanObject.dataset['time']=z['time']
+		completedBox.dataset['index']=z['index']
+		completedBox.checked=(z['complete'])=='true'
+		completedBox.onclick=function(event){toggleTaskCompleted(this.dataset['index']);}
+		spanObject.appendChild(completedBox)
+		x=document.createElement("span")
+		x.textContent=z['task']
+		document.getElementById("assign").appendChild(spanObject)
+		spanObject.appendChild(x)
+		spanObject.dataset['date']=z['date']
+		
+		spanObject.dataset['complete']=z['complete']
+		
+
+
+
+		day=new Date()
+		r=z['date'].split('-')
+		x=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
+		y=day.setFullYear(r[0],r[1],r[2])
+		
+		if(x>y){
+			if(completedBox.checked==false){
+			spanObject.style.top=px(objcount*20);
+			shakyObjs[shakyObjs.length]=spanObject;
+			setTimeout(() => quakeElement(shakyObjs.pop(0)), 100);
+			}else{
+				spanObject.remove()
+				objcount--
+			}
+		}else{
+			spanObject.style.top=px(objcount*20)
+		}
+		
+		spanObject.animate({ 'opacity': [0,1]},1000)
+	}
+	function px(v) {
+        return `${v}px`;
+      }
+	var objcount=-1
+	//while(document.dateOrder==false){
+		;
+	//}
+	function waitUntilOrderedAndThenShowTheThings(){
+	if(document.dateOrder==true){
+	getCookie("tasks",function(response){
+		x=[]
+		response.value.split(',').forEach(function(arg){x.push(atob(arg));})
+		console.log(x)
+		y=x
+		if(y==[""]){
+			y=[]
+		}
+		z=[]
+		for(var i=0;i<y.length;i++){
+			z[i]=y[i].split('#')
+			a={}
+			for(var j=0;j<z[i].length;j++){
+				a[z[i][j].split(':')[0]]=z[i][j].split(':')[1]
+			}
+			z[i]=a
+		}
+		
+		//console.log(z)
+		date=""
+		for(var i=0;i<z.length;i++){
+			console.log(Object.entries(z[i])[0])
+			
+			if(Object.entries(z[i])[0][0]!=''){
+				day=new Date()
+				r=z[i]['date']
+				r=r.split('-')
+				a=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
+				y=day.setFullYear(r[0],r[1],r[2])
+				console.log(a)
+				console.log(y)
+				if((z[i]['date']!=date)&&((a<=y)||(z[i]['completed']==false))){
+					date=z[i]['date']
+					x=document.createElement("span")
+					y=document.createElement('span')
+					y['textContent']=date
+					x.dataset['date']=date
+					x['style']="position:absolute";
+					y['style']="position:relative";
+					x.className='seperator';
+					y.className='seperator2';
+					x.appendChild(y)
+					objcount++
+					x.style.top=px(objcount*20+20)
+					document.getElementById('assign').appendChild(x)
+				}
+				objcount++
+				addTask({'index':i,...z[i]})
+				cookieCount++
+			}
+		}
+		replaceTasks()
+		
+		x=document.getElementById('assign').children
+		v=[]
+		for(var i=0;i<x.length;i++){
+			v.push(x[i])
+		}
+		v.forEach(function(arg1){arg1.getAnimations().forEach(function(arg){arg.cancel()})})
+		setTimeout(() => v.forEach(function(arg1){arg1.getAnimations().forEach(function(arg){arg.cancel()})}),101);
+		
+		document.getElementById('assign').animate({ 'opacity': [0,1]},1000)
+	})
+		tickSchedulingOptions()
+	}else{
+		setTimeout(() => waitUntilOrderedAndThenShowTheThings(), 100);
+	}
+	}
+	waitUntilOrderedAndThenShowTheThings()
+	</script>
+	  <button class="settings_button" width=19 height=19 onclick="settingsFadeOut();settingsFadeIn();">
+		  <img src="images/settings_gear.png" width=17 height=17 style="margin: 6px 0 2px;">
+	  </button>
+  </span>
+	<span class="settings_menu" id="settings_menu">
+		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
+			test
+		</span>
+
+
+
+
+
+
+
+
+
+
+		
+	</span>
+	<script>
+		 document.settings_menu=document.getElementById('settings_menu')
+		document.settingsSchedulingVisible=false
+		document.settings_menu.remove()
+	</script>
+</body>
 </html>
+
+
+<!--iframe id="my_iframe" style="display:none;"></iframe>
+<script>
+function Download(url) {
+    document.getElementById('my_iframe').src = url;
+};
+</script>
+
+
+
+
+
+
+
+
+
+
+
+The js:
+
+const dropArea = document.getElementById('drop-area');
+const fileInput = document.getElementById('file-input');
+
+// Utility function to prevent default browser behavior
+function preventDefaults(e) {
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+// Preventing default browser behavior when dragging a file over the container
+dropArea.addEventListener('dragover', preventDefaults);
+dropArea.addEventListener('dragenter', preventDefaults);
+dropArea.addEventListener('dragleave', preventDefaults);
+
+// Handling dropping files into the area
+dropArea.addEventListener('drop', handleDrop);
+
+// We’ll discuss `handleDrop` function down the road
+function handleDrop(e) { /* ... */ }
+
+
+
+
+
+dropArea.addEventListener('dragover', () => {
+  dropArea.classList.add('drag-over');
+});
+
+dropArea.addEventListener('dragleave', () => {
+  dropArea.classList.remove('drag-over');
+});
+
+
+
+
+
+function handleDrop(e) {
+  e.preventDefault();
+
+  // Getting the list of dragged files
+  const files = e.dataTransfer.files;
+
+  // Checking if there are any files
+  if (files.length) {
+    // Assigning the files to the hidden input from the first step
+    fileInput.files = files;
+
+    // Processing the files for previews (next step)
+    handleFiles(files);
+  }
+}
+
+// We’ll discuss `handleFiles` function down the road
+function handleFiles(files) { /* ... */ }
+
+
+
+
+function handleFiles(files) {
+  for (const file of files) {
+    // Initializing the FileReader API and reading the file
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    // Once the file has been loaded, fire the processing
+    reader.onloadend = function (e) {
+      const preview = document.createElement('img');
+
+      if (isValidFileType(file)) {
+        preview.src = e.target.result;
+      }
+
+      // Apply styling
+      preview.classList.add('preview-image');
+      const previewContainer = document.getElementById('preview-container');
+      previewContainer.appendChild(preview);
+    };
+  }
+}
+
+// We’ll discuss `isValidFileType` function down the road
+function isValidFileType() {
+  return true;
+}
+
+
+function isValidFileType(file) {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  return allowedTypes.includes(file.type);
+}-->
