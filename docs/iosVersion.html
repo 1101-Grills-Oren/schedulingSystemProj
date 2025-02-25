@@ -668,7 +668,7 @@
 		return localStorage[name]
 	}
 	function setCookie(name,value){
-		localStorage[name]=''+value
+		localStorage.setItem(name,''+value)
 	}
 	function updateCookie(name,addedValue){
 		getCookie(name,function(response){
