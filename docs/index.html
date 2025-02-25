@@ -655,11 +655,11 @@
 		}
 	//console.log(cookieStore.getAll())
 	function getCookie(name,thendo){
-		cookieStore.get(name).then(response=>{thendo(response);})
+		document.cookieStore.get(name).then(response=>{thendo(response);})
 		return document.x
 	}
 	function setCookie(name,value){
-		cookieStore.set({name:name,value:value,sameSite:"strict",secure:false,expires: new Date().getTime()+100000000000})
+		document.cookieStore.set({name:name,value:value,sameSite:"strict",secure:false,expires: new Date().getTime()+100000000000})
 	}
 	function updateCookie(name,addedValue){
 		getCookie(name,function(response){
