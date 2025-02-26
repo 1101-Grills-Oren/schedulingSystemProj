@@ -305,6 +305,7 @@
 		.option_clicked_line_a{
 			animation: option_clicked_line_show 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
 			width:auto;
+			height:0px;
 			border-bottom:1px solid #adadad;
 			line-height:0.1em;
 			margin: 0px 0 0px;
@@ -762,7 +763,7 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						if(this.clicked==true){
+						if(this.parentElement.children[0].clicked==true){
 							this.parentElement.className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
