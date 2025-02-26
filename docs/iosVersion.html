@@ -766,11 +766,11 @@
 					x[i].children[0].onclick=function(){
 						if(this.clicked==true){
 							this.parentElement['classname']="option-unclicked"
-							this.parentElement.style.setProperty('color','#FF0000')
+							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}else{
 							this.parentElement['classname']='option-clicked'
-							this.parentElement.style.setProperty('color','#FF0000')
+							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
 						toggleTaskCompleted(this.dataset['index']);
