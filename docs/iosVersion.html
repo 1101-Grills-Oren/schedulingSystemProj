@@ -763,7 +763,7 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						if(this.parentElement.children[0].clicked==true){
+						if(this.parentElement.className!="option_clicked_line_a"){
 							this.parentElement.className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
