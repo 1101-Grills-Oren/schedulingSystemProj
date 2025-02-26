@@ -763,12 +763,12 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						if(this.parentElement.className!="option_clicked_line_a"){
-							this.parentElement.className="option_clicked_line_a"
+						if(this.parentElement.children[1].className!="option_clicked_line_a"){
+							this.parentElement.children[1].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}else{
-							this.parentElement.className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
+							this.parentElement.children[1].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
 						toggleTaskCompleted(this.dataset['index']);
@@ -1031,9 +1031,9 @@
 		spanObject.dataset['date']=z['date']
 		
 		if(completedBox.checked){
-			spanObject.className="option_clicked_line_a"
+			x.className="option_clicked_line_a"
 		}else{
-			spanObject.className="option_clicked_line_b"
+			x.className="option_clicked_line_b"
 			
 		}
 		spanObject.dataset['complete']=z['complete']
