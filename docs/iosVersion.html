@@ -308,7 +308,7 @@
 			text-align:center;
 			border-bottom:1px solid #adadad;
 			line-height:0.1em;
-			margin: 10px 0 20px;
+			margin: 0px 0 0px;
 			position: relative;
 			z-index: 3;
 		}
@@ -318,7 +318,7 @@
 			text-align:center;
 			border-bottom:1px solid #0000FF;
 			line-height:0.1em;
-			margin: 10px 0 20px;
+			margin: 0px 0 0px;
 			position: relative;
 			z-index: 3;
 		}
@@ -1032,16 +1032,12 @@
 		spanObject.appendChild(x)
 		spanObject.dataset['date']=z['date']
 		
-		y=document.createElement('span')
 		if(completedBox.checked){
-			y.className="option_clicked_line_a"
-			y.style.width="100px"
+			x.className="option_clicked_line_a"
 		}else{
-			y.className="option_clicked_line_b"
-			y.style.width="0px"
+			x.className="option_clicked_line_b"
+			
 		}
-		spanObject.appendChild(y)
-		
 		spanObject.dataset['complete']=z['complete']
 		
 
