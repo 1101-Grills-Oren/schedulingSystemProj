@@ -295,17 +295,17 @@
 		}
 		@keyframes option_clicked_line_show{
 			from {width:0px}
-			to {width:auto}
+			to {width:200px}
 		}
 		
 		@keyframes option_clicked_line_hide{
-			from {width:auto,border-bottom:1px solid #adadad}
-			to {width:0px,border-bottom:0px solid #adadad}
+			from {width:200px,border-bottom:1px solid #adadad}
+			to {width:0px,border-bottom:1px solid #adadad}
 		}
 		.option_clicked_line_a{
 			animation: option_clicked_line_show 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
 			width:auto;
-			height:0px;
+			height:8px;
 			border-bottom:1px solid #adadad;
 			line-height:0.1em;
 			margin: 0px 0 0px;
@@ -314,7 +314,7 @@
 		}
 		.option_clicked_line_b{
 			animation: option_clicked_line_hide 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
-			
+			height:8px;
 			border-bottom:0px solid #0000FF;
 			line-height:0.1em;
 			margin: 0px 0 0px;
