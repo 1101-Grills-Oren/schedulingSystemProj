@@ -8,6 +8,7 @@
 		document.color1="#000000";
 		document.color2="#FFFFFF";
 		document.color3="#fcfcfc";
+		document.color5="#131313";
 		document.color4="#FF0000";
 		getColor=function(id){
 			if(id==1){
@@ -19,12 +20,17 @@
 			}
 		}
 		if((localStorage.colors==undefined)||(localStorage.colors=="undefined")){
-			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4])
+			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 		}else{
 			document.color1=localStorage.colors.split(',')[0]
 			document.color2=localStorage.colors.split(',')[1]
 			document.color3=localStorage.colors.split(',')[2]
 			document.color4=localStorage.colors.split(',')[3]
+			if(localStorage.colors.split(',')[4]!=undefined){
+				document.color5=localStorage.colors.split(',')[4]
+			}else{
+				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
+			}
 		}
 		if((localStorage.version=="undefined")||(localStorage.version==undefined)){
 			localStorage.setItem('version',"1.1");
@@ -107,8 +113,8 @@
 	</script>
 	<style>
 		.body{
-			background-color:var(document.color2);
-			color:var(document.color1);
+			background-color:#FFFFFF;
+			color:"document.color1";
 		}
 		.seperator{
 			width:98%;
@@ -294,39 +300,59 @@
 			color:blue
 		}
 		@keyframes option_clicked_line_show{
-			from {width:0px}
-			to {width:200px}
+			from {width:0px;border-bottom:1px solid #adadad;}
+			to {width:inital;border-bottom:1.5px solid #adadad;}
 		}
 		
 		@keyframes option_clicked_line_hide{
-			from {width:200px}
-			to {width:0px}
+			from {width:inital;border-bottom:1.5px solid #adadad;}
+			to {width:0px;border-bottom:1px solid #adadad;}
+		}
+		.text_option_core_a{
+			clip-path:margin-box;
+			margin-right:10px
+		}
+		.text_option_core_b{
+			clip-path:margin-box;
+			margin-right:10px
 		}
 		.option_clicked_line_a{
 			animation: option_clicked_line_show 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
-			width:200px;
-			height:10px;
-			border-bottom:1px solid #adadad;
+			width:inherit;
+			height:0.5px;
+			left:20px;
+			border-bottom:1.5px solid #adadad;
 			line-height:0.1em;
-			margin: 0px 0 0px;
-			position: relative;
+			margin: 10px 0 10px;
+			position: absolute;
 			z-index: 3;
 		}
 		.option_clicked_line_b{
 			animation: option_clicked_line_hide 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
-			height:10px;
-			border-bottom:1px solid #0000FF;
+			width:inherit;
+			height:0.5px;
+			left:20px;
+			border-bottom:0px solid #0000FF;
 			line-height:0.1em;
-			margin: 0px 0 0px;
-			position: relative;
+			margin: 10px 0 10px;
+			position: absolute;
 			z-index: 3;
 		}
 		
 	</style>
 	<script>
-		
 		document.styleSheets[0].rules[0].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[0].styleMap.set('color',[document.color1])
+		
+		document.styleSheets[0].rules[32][0].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[32][1].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[33][0].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[33][1].style.borderBottomColor=document.color5
+
+		document.styleSheets[0].rules[34].style.color=document.color1
+		document.styleSheets[0].rules[35].style.color=document.color1
+		document.styleSheets[0].rules[35].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[36].style.borderBottomColor=document.color5
 		
 		document.styleSheets[0].rules[2].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[2].styleMap.set('color',[document.color1])
@@ -767,12 +793,12 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						if(this.parentElement.children[1].className!="option_clicked_line_a"){
-							this.parentElement.children[1].className="option_clicked_line_a"
+						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
+							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}else{
-							this.parentElement.children[1].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
+							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
 						toggleTaskCompleted(this.dataset['index']);
@@ -1029,15 +1055,18 @@
 		completedBox.onclick=function(event){toggleTaskCompleted(this.dataset['index']);}
 		spanObject.appendChild(completedBox)
 		x=document.createElement("span")
+		y=document.createElement("span")
 		x.textContent=z['task']
 		document.getElementById("assign").appendChild(spanObject)
 		spanObject.appendChild(x)
 		spanObject.dataset['date']=z['date']
-		
+		x.appendChild(y)
+		x.className="text_option_core"
+		x.style['width']=px(x.textContent.length*6)
 		if(completedBox.checked){
-			x.className="option_clicked_line_a"
+			y.className="option_clicked_line_a"
 		}else{
-			x.className="option_clicked_line_b"
+			y.className="option_clicked_line_b"
 			
 		}
 		spanObject.dataset['complete']=z['complete']
@@ -1165,13 +1194,14 @@
 	<span class="schedulingPopupAdd" id="schedulingPopupAdd">
 		 
 	</span>
-	<span class="settings_menu" id="settings_menu">
+	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;">
 		<p>Document Text Color: <input id="color1" type="color"></p>
 		<p>Document Background Color: <input id="color2" type="color"></p>
 		<p>Document Background Color B: <input id="color3" type="color"></p>
 		<p>Document Overdue Flash Color: <input id="color4" type="color"></p>
+		<p>Task Finished Strikethrough Color: <input id="color5" type="color"></p>
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value]);document.location.reload()">
+		<input type="button" value="Save" onclick="localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.location.reload()">
 		
 		Menu Under Construction
 		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
@@ -1196,6 +1226,7 @@
 		document.getElementById('color2').value=document.color2
 		document.getElementById('color3').value=document.color3
 		document.getElementById('color4').value=document.color4
+		document.getElementById('color5').value=document.color5
 		 document.settings_menu=document.getElementById('settings_menu')
 		document.settingsSchedulingVisible=false
 		document.settings_menu.remove()
