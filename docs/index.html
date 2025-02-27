@@ -8,6 +8,7 @@
 		document.color1="#000000";
 		document.color2="#FFFFFF";
 		document.color3="#fcfcfc";
+		document.color5="#131313";
 		document.color4="#FF0000";
 		getColor=function(id){
 			if(id==1){
@@ -19,12 +20,17 @@
 			}
 		}
 		if((localStorage.colors==undefined)||(localStorage.colors=="undefined")){
-			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4])
+			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 		}else{
 			document.color1=localStorage.colors.split(',')[0]
 			document.color2=localStorage.colors.split(',')[1]
 			document.color3=localStorage.colors.split(',')[2]
 			document.color4=localStorage.colors.split(',')[3]
+			if(localStorage.colors.split(',')[4]!=undefined){
+				document.color5=localStorage.colors.split(',')[4]
+			}else{
+				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
+			}
 		}
 		if((localStorage.version=="undefined")||(localStorage.version==undefined)){
 			localStorage.setItem('version',"1.1");
@@ -42,6 +48,51 @@
 			y=[]
 			for(var i=0;i<z.length;i++){
 				z[i]['task']=btoa(z[i]['task'])
+				z[i]=Object.entries(z[i])
+				for(var j=0;j<z[i].length;j++){
+					z[i][j]=z[i][j].join(':')
+				}
+				z[i]=z[i].join('#')
+			}
+			if(z[0]==':'){
+				z[0]=''
+			}
+			for(var i=0;i<z.length;i++){
+				z[i]=btoa(z[i])
+			}
+			//console.log(z)
+			z=z.join(',')
+			localStorage.setItem('tasks',z);
+			console.log(z)
+		}
+		function toNumList(x){
+			y=[]
+			x=x.split('')
+			x.forEach(function(arg){y.push(arg.charCodeAt(0))})
+			return btoa(y)
+		}
+		function fromNumList(x){
+			x=atob(x).split(',')
+			y=[]
+			x.forEach(function(arg){y.push(String.fromCharCode(arg))})
+			return y.join('')
+		}
+		if((localStorage.version=='1.1')){
+			localStorage.setItem('version',"1.2");
+			x=localStorage.tasks
+			y=x.split(',')
+			z=[]
+			for(var i=0;i<y.length;i++){
+				z[i]=atob(y[i]).split('#')
+				a={}
+				for(var j=0;j<z[i].length;j++){
+					a[z[i][j].split(':')[0]]=z[i][j].split(':')[1]
+				}
+				z[i]=a
+			}
+			y=[]
+			for(var i=0;i<z.length;i++){
+				z[i]['task']=toNumList(atob(z[i]['task']))
 				z[i]=Object.entries(z[i])
 				for(var j=0;j<z[i].length;j++){
 					z[i][j]=z[i][j].join(':')
@@ -249,37 +300,60 @@
 			color:blue
 		}
 		@keyframes option_clicked_line_show{
-			from {width:0px}
-			to {width:100%}
+			from {width:0px;border-bottom:1px solid #adadad;}
+			to {width:inital;border-bottom:1.5px solid #adadad;}
 		}
 		
 		@keyframes option_clicked_line_hide{
-			from {width:100%}
-			to {width:0px}
+			from {width:inital;border-bottom:1.5px solid #adadad;}
+			to {width:0px;border-bottom:1px solid #adadad;}
+		}
+		.text_option_core_a{
+			clip-path:margin-box;
+			margin-right:10px
+		}
+		.text_option_core_b{
+			clip-path:margin-box;
+			margin-right:10px
 		}
 		.option_clicked_line_a{
 			animation: option_clicked_line_show 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
-			left:0px;
-			right:0px;
-			text-align:center;
-			border-bottom:1px solid #adadad;
+			width:inherit;
+			height:0.5px;
+			left:20px;
+			border-bottom:1.5px solid #adadad;
 			line-height:0.1em;
-			margin: 10px 0 20px;
-			position: relative;
+			margin: 10px 0 10px;
+			position: absolute;
+			z-index: 3;
 		}
 		.option_clicked_line_b{
 			animation: option_clicked_line_hide 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
-			left:0px;
-			right:100px;
-			text-align:center;
-			border-bottom:1px solid #0000FF;
+			width:inherit;
+			height:0.5px;
+			left:20px;
+			border-bottom:0px solid #0000FF;
 			line-height:0.1em;
-			margin: 10px 0 20px;
-			position: relative;
+			margin: 10px 0 10px;
+			position: absolute;
+			z-index: 3;
 		}
 		
 	</style>
 	<script>
+		document.styleSheets[0].rules[0].styleMap.set('background-color',[document.color2])
+		document.styleSheets[0].rules[0].styleMap.set('color',[document.color1])
+		
+		document.styleSheets[0].rules[32][0].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[32][1].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[33][0].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[33][1].style.borderBottomColor=document.color5
+
+		document.styleSheets[0].rules[34].style.color=document.color1
+		document.styleSheets[0].rules[35].style.color=document.color1
+		document.styleSheets[0].rules[35].style.borderBottomColor=document.color5
+		document.styleSheets[0].rules[36].style.borderBottomColor=document.color5
+		
 		document.styleSheets[0].rules[2].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[2].styleMap.set('color',[document.color1])
 
@@ -311,7 +385,7 @@
 	  <input type="text" id="taskName" placeholder="Task Name" required>
 	  <input type="date" id="date" placeholder="Date" required>
 	  <input type="time" id="time" placeholder="Time" required>
-	  <input id="clickMe" type="button" value="clickme" onclick="updateCookie('tasks',btoa('complete:false#task:'+btoa(document.getElementById('taskName').value)+'#date:'+document.getElementById('date').value+'#time:'+document.getElementById('time').value.replaceAll(':','*')));cookieCount++;objcount++;addTask({index:cookieCount,complete:false,task:document.getElementById('taskName').value,date:document.getElementById('date').value,time:document.getElementById('time').value.replaceAll(':','*')});replaceTasks();" >
+	  <input id="clickMe" type="button" value="clickme" onclick="updateCookie('tasks',btoa('complete:false#task:'+toNumList(document.getElementById('taskName').value)+'#date:'+document.getElementById('date').value+'#time:'+document.getElementById('time').value.replaceAll(':','*')));cookieCount++;objcount++;addTask({index:cookieCount,complete:false,task:document.getElementById('taskName').value,date:document.getElementById('date').value,time:document.getElementById('time').value.replaceAll(':','*')});replaceTasks();" >
 	<p id="assigncontainer" ><p id="assign" ></p></p>
 
 
@@ -719,13 +793,12 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						if(this.clicked==true){
-							this.parentElement['classname']="option-unclicked"
-							this.parentElement.style.setProperty('color','#FF0000')
+						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
+							this.parentElement.children[1].children[0].className="option_clicked_line_a"
+							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}else{
-							this.parentElement['classname']='option-clicked'
-							this.parentElement.style.setProperty('color','#FF0000')
+							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
 						toggleTaskCompleted(this.dataset['index']);
@@ -982,19 +1055,20 @@
 		completedBox.onclick=function(event){toggleTaskCompleted(this.dataset['index']);}
 		spanObject.appendChild(completedBox)
 		x=document.createElement("span")
+		y=document.createElement("span")
 		x.textContent=z['task']
 		document.getElementById("assign").appendChild(spanObject)
 		spanObject.appendChild(x)
 		spanObject.dataset['date']=z['date']
-		
-		y=document.createElement('span')
+		x.appendChild(y)
+		x.className="text_option_core"
+		x.style['width']=px(x.textContent.length*6)
 		if(completedBox.checked){
-			y.classname="option_clicked_line_a"
+			y.className="option_clicked_line_a"
 		}else{
-			y.classname="option_clicked_line_b"
+			y.className="option_clicked_line_b"
+			
 		}
-		spanObject.appendChild(y)
-		
 		spanObject.dataset['complete']=z['complete']
 		
 
@@ -1055,7 +1129,8 @@
 			if(Object.entries(z[i])[0][0]!=''){
 				day=new Date()
 				r=z[i]['date']
-				z[i]['task']=atob(z[i]['task'])
+				console.log(z[i]['task'])
+				z[i]['task']=fromNumList(z[i]['task'])
 				r=r.split('-')
 				a=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
 				y=day.setFullYear(r[0],r[1],r[2])
@@ -1119,13 +1194,14 @@
 	<span class="schedulingPopupAdd" id="schedulingPopupAdd">
 		 
 	</span>
-	<span class="settings_menu" id="settings_menu">
+	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;">
 		<p>Document Text Color: <input id="color1" type="color"></p>
 		<p>Document Background Color: <input id="color2" type="color"></p>
 		<p>Document Background Color B: <input id="color3" type="color"></p>
 		<p>Document Overdue Flash Color: <input id="color4" type="color"></p>
+		<p>Task Finished Strikethrough Color: <input id="color5" type="color"></p>
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value]);document.location.reload()">
+		<input type="button" value="Save" onclick="localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.location.reload()">
 		
 		Menu Under Construction
 		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
@@ -1150,6 +1226,7 @@
 		document.getElementById('color2').value=document.color2
 		document.getElementById('color3').value=document.color3
 		document.getElementById('color4').value=document.color4
+		document.getElementById('color5').value=document.color5
 		 document.settings_menu=document.getElementById('settings_menu')
 		document.settingsSchedulingVisible=false
 		document.settings_menu.remove()
