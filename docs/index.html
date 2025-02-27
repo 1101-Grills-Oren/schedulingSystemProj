@@ -793,6 +793,7 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
+						toggleTaskCompleted(this.dataset['index']);
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
@@ -801,7 +802,7 @@
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
-						toggleTaskCompleted(this.dataset['index']);
+						
 					}
 				}
 				day=new Date()
