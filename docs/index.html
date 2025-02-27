@@ -32,6 +32,9 @@
 				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 			}
 		}
+		if(localStorage.shakingViolence=="undefined"){
+			localStorage.setItem("shakingViolence",0.4);
+		}
 		if((localStorage.version=="undefined")||(localStorage.version==undefined)){
 			localStorage.setItem('version',"1.1");
 			x=localStorage.tasks
@@ -473,7 +476,7 @@
           el: args.el,
           index: 0,
           ttl: 50,
-          delta: 0.4,
+          delta: localStorage.shakingViolence-0,
           speedMilliseconds: 20,
           animationOption: args['animationOption'] || parseInt(Math.random() * 2),
           ...getXY(args.el)
@@ -793,7 +796,6 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						toggleTaskCompleted(this.dataset['index']);
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
@@ -802,7 +804,7 @@
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							console.log('test')
 						}
-						
+						toggleTaskCompleted(this.dataset['index']);
 					}
 				}
 				day=new Date()
@@ -1201,8 +1203,10 @@
 		<p>Document Background Color B: <input id="color3" type="color"></p>
 		<p>Document Overdue Flash Color: <input id="color4" type="color"></p>
 		<p>Task Finished Strikethrough Color: <input id="color5" type="color"></p>
+		<p>Shaking Violence (Suggestion: Keep low.): <input id="shakingViolence" type="number"></p>
+		
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.location.reload()">
+		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.location.reload()">
 		
 		Menu Under Construction
 		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
@@ -1228,6 +1232,7 @@
 		document.getElementById('color3').value=document.color3
 		document.getElementById('color4').value=document.color4
 		document.getElementById('color5').value=document.color5
+		document.getElementById('shakingViolence').value=localStorage.shakingViolence
 		 document.settings_menu=document.getElementById('settings_menu')
 		document.settingsSchedulingVisible=false
 		document.settings_menu.remove()
