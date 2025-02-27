@@ -10,17 +10,16 @@
 <body>
   <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
 	<script>eruda.init();</script>  
-	<iframe allow-same-origin=true id="frameID" src="https://k12.instructure.com/courses/1904936">
-	</iframe>
+	
 	<a id="x"></a>
 	<a href="#" onclick="getIframeContent('frameID');">
 		Get the content of Iframe
 	</a>
 
 	<script>
-		function getIframeContent(frameID) {
-			$( "#x" ).load( "https://k12.instructure.com/courses/1904936" );
-		} 
+		
+		$( "#x" ).load( "https://k12.instructure.com/courses/1904936" );
+		
 	</script>
 </body>
 
