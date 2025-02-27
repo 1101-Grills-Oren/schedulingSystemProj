@@ -148,7 +148,7 @@
 			height: 220px;
 			width: 300px;
 			position: fixed;
-			top: 30px;
+			top: 45px;
 			right: 10px;
 			z-index: 51;
 			display: block;
@@ -415,14 +415,14 @@
 		  function settingsFadeIn(){
 			  if(document.settingsVisible==false){
 			  document.body.appendChild(document.settings_menu)
-			  document.settings_menu.animate({ 'opacity': [0,1]},1000)
-				  setTimeout(() => {document.settingsVisible=true}, 1001);
+			  document.settings_menu.animate({ 'height': ["0px","inital"]},700)
+				  setTimeout(() => {document.settingsVisible=true}, 701);
 			  }
 		  }
 		  function settingsFadeOut(){
 			  if(document.settingsVisible==true){
-			  document.settings_menu.animate({ 'opacity': [1,0]},1000)
-			  setTimeout(() => document.settings_menu.remove(), 990);
+			  document.settings_menu.animate({ 'height': ["inital","0px"]},700)
+			  setTimeout(() => document.settings_menu.remove(), 690);
 				setTimeout(() => {document.settingsVisible=false}, 1);
 			  }
 		  }
@@ -1194,7 +1194,7 @@
 	<span class="schedulingPopupAdd" id="schedulingPopupAdd">
 		 
 	</span>
-	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;">
+	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;scrollbar-color:transparent;scrollbar-gutter:transparent;scrollbar-width:2px;">
 		<p>Document Text Color: <input id="color1" type="color"></p>
 		<p>Document Background Color: <input id="color2" type="color"></p>
 		<p>Document Background Color B: <input id="color3" type="color"></p>
