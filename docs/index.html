@@ -1242,7 +1242,7 @@
 	}
 	shakyObjs=[]
 	function addTask(z){
-		console.log("Adding Task:","Date:",z['date'].replaceAll('-','/'),"Time:",z['time'].replaceAll('*',':'), "Name: \""+z['task']+"\"")
+		console.log(new Date.getHours(),':',new Date.getMinutes(),':',new Date.getSeconds(),'.',new Date.getMilliseconds(),"Info    ","Adding Task:","Date:",z['date'].replaceAll('-','/'),"Time:",z['time'].replaceAll('*',':'), "Name: \""+z['task']+"\"")
 		//console.log(z)
 		spanObject=document.createElement("p")
 		spanObject.style="position:relative;"
