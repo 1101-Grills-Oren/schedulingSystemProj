@@ -66,7 +66,7 @@
 			//console.log(z)
 			z=z.join(',')
 			localStorage.setItem('tasks',z);
-			console.log(z)
+			//console.log(z)
 		}
 		function toNumList(x){
 			y=[]
@@ -111,7 +111,7 @@
 			//console.log(z)
 			z=z.join(',')
 			localStorage.setItem('tasks',z);
-			console.log(z)
+			//console.log(z)
 		}
 	</script>
 	<style>
@@ -239,8 +239,6 @@
 
 
 
-
-
 		@keyframes anim_1_7{
 			from {left:-170px; top:-170px}
 			to {left:0px; top:0px}
@@ -341,9 +339,183 @@
 			position: absolute;
 			z-index: 3;
 		}
+		@keyframes popup_displaya{
+			from {opacity:0%;}
+			to {opacity:inital;}
+		}
 		
+		@keyframes popup_displayb{
+			from {opacity:100%;}
+			to {opacity:0%;}
+		}
+		.popup_display1a{
+			animation: popup_displaya 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			position:fixed;
+			display:block;
+			top:0px;
+			left:0px;
+			right:0px;
+			bottom:0px;
+			height:"px(window.innerHeight)";
+			width:"px(window.innerWidth)";
+			text-align:center;
+			vertical-align:middle;
+			align-content:center;
+			opacity:100%;
+			background-color:black;
+		}
+		.popup_display1b{
+			animation: popup_displayb 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			position:fixed;
+			display:block;
+			top:0px;
+			left:0px;
+			right:0px;
+			bottom:0px;
+			height:"px(window.innerHeight)";
+			width:"px(window.innerWidth)";
+			text-align:center;
+			vertical-align:middle;
+			align-content:center;
+			opacity:100%;
+			background-color:black;
+		}
+		.popup_display2a{
+			position:absolute;
+			position-area:center;
+			animation: popup_displaya 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:fit-content;
+			margin-left:10px;
+			margin-right:10px;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+		.popup_display2b{
+			position:absolute;
+			position-area:center;
+			animation: popup_displayb 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:fit-content;
+			margin-left:10px;
+			margin-right:10px;
+			margin-top:10px;
+			margin-bottom:10px;
+		}
+		.popup_display3{
+			position:absolute;
+			right:0px;
+			bottom:12px;
+			top:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:12px;
+			background-image:url("images/bar_2.png");
+		}
+		.popup_display4{
+			position:absolute;
+			left:0px;
+			top:12px;
+			bottom:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:12px;
+			background-image:url("images/bar_1.png");
+		}
+		.popup_display5{
+			position:absolute;
+			right:12px;
+			top:0px;
+			left:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			height:12px;
+			background-image:url("images/bar_3.png");
+		}
+		.popup_display6{
+			position:absolute;
+			bottom:0px;
+			left:12px;
+			right:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			height:12px;
+			background-image:url("images/bar_4.png");
+		}
+		
+		.popup_display7{
+			position:absolute;
+			right:0px;
+			top:0px;
+			width:12px;
+			height:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:12px;
+			background-image:url("images/corner_1.png");
+		}
+		.popup_display8{
+			position:absolute;
+			left:0px;
+			top:0px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:12px;
+			height:12px;
+			background-image:url("images/corner_2.png");
+		}
+		.popup_display9{
+			position:absolute;
+			right:0px;
+			bottom:0px;
+			width:12px;
+			height:12px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			background-image:url("images/corner_3.png");
+		}
+		.popup_display10{
+			position:absolute;
+			bottom:0px;
+			left:0px;
+			opacity:100%;
+			outline-color:green;
+			outline-width:3px;
+			width:12px;
+			height:12px;
+			background-image:url("images/corner_4.png");
+		}
+		.popup_content{
+			position:absolute;
+			bottom:12px;
+			left:12px;
+			top:12px;
+			right:12px;
+			opacity:100%;
+			overflow-y: auto;
+			will-change: scroll-position;
+			scrollbar-width:1px;
+			background-image:url("images/popup_background.png");
+		}
 	</style>
 	<script>
+		function px2(v,size) {
+			v=(v-size)/2
+	        return `${(v-size)/2}px`;
+	    }
+
+		
 		document.styleSheets[0].rules[0].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[0].styleMap.set('color',[document.color1])
 		
@@ -356,6 +528,13 @@
 		document.styleSheets[0].rules[35].style.color=document.color1
 		document.styleSheets[0].rules[35].style.borderBottomColor=document.color5
 		document.styleSheets[0].rules[36].style.borderBottomColor=document.color5
+
+
+		
+		//document.styleSheets[0].rules[43].styleMap.set('background-color',[document.color2])
+		document.styleSheets[0].rules[40].styleMap.set('background-color',[document.color3+"A0"])
+		document.styleSheets[0].rules[41].styleMap.set('background-color',[document.color3+"A0"])
+		//document.styleSheets[0].rules[42].styleMap.set('background-color',[document.color2])
 		
 		document.styleSheets[0].rules[2].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[2].styleMap.set('color',[document.color1])
@@ -384,11 +563,7 @@
 	<script>eruda.init();</script>  
 	<span id="assignments_main" onclick="settingsFadeOut();" class="document_container">
   <h1>Assignments V1.1</h1>
-	
-	  <input type="text" id="taskName" placeholder="Task Name" required>
-	  <input type="date" id="date" placeholder="Date" required>
-	  <input type="time" id="time" placeholder="Time" required>
-	  <input id="clickMe" type="button" value="clickme" onclick="updateCookie('tasks',btoa('complete:false#task:'+toNumList(document.getElementById('taskName').value)+'#date:'+document.getElementById('date').value+'#time:'+document.getElementById('time').value.replaceAll(':','*')));cookieCount++;objcount++;addTask({index:cookieCount,complete:false,task:document.getElementById('taskName').value,date:document.getElementById('date').value,time:document.getElementById('time').value.replaceAll(':','*')});replaceTasks();" >
+	<input id="clickMe" type="button" value="Add Task" onclick="popupFadeIn(document.popupTaskAdd)">
 	<p id="assigncontainer" ><p id="assign" ></p></p>
 
 
@@ -444,6 +619,28 @@
 				setTimeout(() => {document.settingsSchedulingVisible=false}, 1);
 			  }
 		  }
+
+
+
+
+			function popupFadeOut(){
+				if(document.getElementsByName("popup")[0]!=undefined){
+					popup=document.getElementsByName("popup")[0]
+					popup.children[0].className="popup_display2b"
+					popup.className="popup_display1b"
+					setTimeout(() => {popup.remove()},1000)
+				}
+			}
+		  function popupFadeIn(popup){
+				document.body.appendChild(popup)
+				popup.children[0].className="popup_display2a"
+				popup.className="popup_display1a"
+			}
+
+
+
+
+		  
 	  </script>
 	  <script id="notmine">
 		  function quakeElement(element){
@@ -520,7 +717,7 @@
 			obj.x=obj.el.newPos.x
 			obj.y=obj.el.newPos.y
 			obj.y=obj.y.slice(0,obj.y.length-2)-1+1
-			console.log(obj.y)
+			//console.log(obj.y)
 			obj.el.newPos=undefined
 		}
         switch (obj.animationOption) {
@@ -672,7 +869,7 @@
 			z[z.length]=y[i]
 			}
 		}
-		console.log(z)
+		//console.log(z)
 		
 		i=0
 		count=0
@@ -743,7 +940,7 @@
 			}
 			count++
 		}}
-		console.log(z)
+		//console.log(z)
 		return z
 	}
 		function replaceTasks(){
@@ -796,16 +993,15 @@
 				if(x[i].dataset&&x[i].dataset['date']!=undefined){
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
-						toggleTaskCompleted(this.dataset['index']);
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
-							console.log('test')
+							//console.log('test')
 						}else{
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
-							console.log('test')
+							//console.log('test')
 						}
-						
+						toggleTaskCompleted(this.dataset['index']);
 					}
 				}
 				day=new Date()
@@ -813,8 +1009,8 @@
 				r=x[i].dataset['date'].split('-')
 				a=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
 				y=day.setFullYear(r[0],r[1],r[2])
-				console.log(a)
-				console.log(y)
+				//console.log(a)
+				//console.log(y)
 				todoChange=function(v){
 					for(var i=0;i<v.length;i++){
 						v[i][0].style['top']=v[i][1]
@@ -832,10 +1028,10 @@
 					}
 						
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20.5+115)]},500)
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20.5+110)]},500)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
-						console.log(x[i])
-						x[i].style.top=px(objcount*20+115)
+						//console.log(x[i])
+						x[i].style.top=px(objcount*20+110)
 						//document.todochange.push([x[i],px(objcount*20+115)])
 						//(todoChange(r))
 					}
@@ -849,8 +1045,8 @@
 						
 						solidObjCount++
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20+115)]},500)
-						x[i].style.top=px(objcount*20+115)
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20+110)]},500)
+						x[i].style.top=px(objcount*20+110)
 						//setTimeout((r=[x[i],px(objcount*20+115)]) => (todoChange(r)),objcount*10)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
 						
@@ -902,7 +1098,7 @@
 			document.getElementById('assigncontainer').appendChild(assignobject2)
 			document.getElementById('assign').remove()
 			assignobject2.id='assign'
-			console.log(document.todochange)
+			//console.log(document.todochange)
 		}
 	//console.log(cookieStore.getAll())
 	function getCookie(name,thendo){
@@ -918,7 +1114,7 @@
 		x=x.split(',')
 		x[x.length]=addedValue;
 		setCookie(name,x);
-		console.log(x)
+		//console.log(x)
 		})
 		
 	}
@@ -1000,7 +1196,7 @@
 	function deleteCookieIndex(name,index){
 		getCookie(name,function(response){
 		x=response.value;
-		console.log(x)
+		//console.log(x)
 		x=x.split(',')
 		y=x.slice(0,index)
 		y.push(...x.slice(index+1))
@@ -1010,7 +1206,7 @@
 		
 	}
 	function toggleTaskCompleted(index){
-		console.log(index)
+		//console.log(index)
 		getCookie('tasks',function(response){
 		x=response.value;
 		y=x.split(',')
@@ -1040,13 +1236,14 @@
 		//console.log(z)
 		z=z.join(',')
 		setCookie('tasks',z);
-		console.log(z)
+		//console.log(z)
 		})
 		
 	}
 	shakyObjs=[]
 	function addTask(z){
-		console.log(z)
+		console.log("Adding Task:","Date:",z['date'].replaceAll('-','/'),"Time:",z['time'].replaceAll('*',':'), "Name: \""+z['task']+"\"")
+		//console.log(z)
 		spanObject=document.createElement("p")
 		spanObject.style="position:relative;"
 		completedBox=document.createElement("input")
@@ -1085,10 +1282,12 @@
 		
 		if(x>y){
 			if(completedBox.checked==false){
+				console.log('Task is Overdue!')
 			spanObject.style.top=px(objcount*20);
 			shakyObjs[shakyObjs.length]=spanObject;
 			setTimeout(() => quakeElement(shakyObjs.pop(0)), 100);
 			}else{
+				console.log("Nevermind, task is past!")
 				spanObject.remove()
 				objcount--
 			}
@@ -1110,7 +1309,7 @@
 	getCookie("tasks",function(response){
 		x=[]
 		response.value.split(',').forEach(function(arg){x.push(atob(arg));})
-		console.log(x)
+		//console.log(x)
 		y=x
 		if(y==[""]){
 			y=[]
@@ -1128,18 +1327,18 @@
 		//console.log(z)
 		date=""
 		for(var i=0;i<z.length;i++){
-			console.log(Object.entries(z[i])[0])
+			//console.log(Object.entries(z[i])[0])
 			
 			if(Object.entries(z[i])[0][0]!=''){
 				day=new Date()
 				r=z[i]['date']
-				console.log(z[i]['task'])
+				//console.log(z[i]['task'])
 				z[i]['task']=fromNumList(z[i]['task'])
 				r=r.split('-')
 				a=day.setFullYear(day.getFullYear(),day.getMonth()+1,day.getDate())
 				y=day.setFullYear(r[0],r[1],r[2])
-				console.log(a)
-				console.log(y)
+				//console.log(a)
+				//console.log(y)
 				if((z[i]['date']!=date)&&((a<=y)||(z[i]['completed']==false))){
 					date=z[i]['date']
 					x=document.createElement("span")
@@ -1195,8 +1394,40 @@
 		  <img src="images/settings_gear.png" width=17 height=17 style="margin: 6px 0 2px;">
 	  </button>
   </span>
-	<span class="schedulingPopupAdd" id="schedulingPopupAdd">
-		 
+	<span class="popup_display1a" id="schedulingPopupAdd" name="popup">
+		 <span class="popup_display2a" id="popupBody" style="width:200px;height:200px;">
+			 <span class="popup_content" id="popupContent">
+				 
+			 </span>
+			 <span class="popup_display3" id="popupBorder1"></span>
+			 <span class="popup_display4" id="popupBorder2"></span>
+			 <span class="popup_display5" id="popupBorder3"></span>
+			 <span class="popup_display6" id="popupBorder4"></span>
+			 <span class="popup_display7" id="popupBorder5"></span>
+			 <span class="popup_display8" id="popupBorder6"></span>
+			 <span class="popup_display9" id="popupBorder7"></span>
+			 <span class="popup_display10" id="popupBorder8"></span>
+		</span>
+	</span>
+	
+	<span class="popup_display1a" id="popupTaskAdd" name="popup" onclick="setTimeout(() => {if(document.popupShouldStay==false){popupFadeOut()};document.popupShouldStay=false;},100)">
+		<span class="popup_display2a" id="popupBody" style="width:400px;height:200px;z-index:6;" onclick="document.popupShouldStay=true;">
+			<span class="popup_content" id="popupContent">
+				<p></p>
+				<input type="text" id="taskName" placeholder="Task Name" required>
+				<input type="date" id="date" placeholder="Date" required>
+				<input type="time" id="time" placeholder="Time" required><p></p>
+				<input id="clickMe" type="button" value="Confirm" onclick="popupFadeOut();updateCookie('tasks',btoa('complete:false#task:'+toNumList(document.getElementById('taskName').value)+'#date:'+document.getElementById('date').value+'#time:'+document.getElementById('time').value.replaceAll(':','*')));cookieCount++;objcount++;addTask({index:cookieCount,complete:false,task:document.getElementById('taskName').value,date:document.getElementById('date').value,time:document.getElementById('time').value.replaceAll(':','*')});replaceTasks();" >
+			</span>
+			<span class="popup_display3" id="popupBorder1"></span>
+			<span class="popup_display4" id="popupBorder2"></span>
+			<span class="popup_display5" id="popupBorder3"></span>
+			<span class="popup_display6" id="popupBorder4"></span>
+			<span class="popup_display7" id="popupBorder5"></span>
+			<span class="popup_display8" id="popupBorder6"></span>
+			<span class="popup_display9" id="popupBorder7"></span>
+			<span class="popup_display10" id="popupBorder8"></span>
+		</span>
 	</span>
 	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;scrollbar-color:transparent;scrollbar-gutter:transparent;scrollbar-width:2px;">
 		<p>Document Text Color: <input id="color1" type="color"></p>
@@ -1240,6 +1471,10 @@
 		 document.schedulingPopupAdd=document.getElementById('schedulingPopupAdd')
 		document.schedulingPopupAddVisible=false
 		document.schedulingPopupAdd.remove()
+		
+		document.popupTaskAdd=document.getElementById('popupTaskAdd')
+		document.popupTaskAddVisible=false
+		document.popupTaskAdd.remove()
 	</script>
 </body>
 </html>
