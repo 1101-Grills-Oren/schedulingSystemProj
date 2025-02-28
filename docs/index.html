@@ -22,6 +22,7 @@
 		if((localStorage.colors==undefined)||(localStorage.colors=="undefined")){
 			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 		}else{
+			
 			document.color1=localStorage.colors.split(',')[0]
 			document.color2=localStorage.colors.split(',')[1]
 			document.color3=localStorage.colors.split(',')[2]
@@ -31,6 +32,11 @@
 			}else{
 				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 			}
+			document.documentElement.style.setProperty('--color1',document.color1)
+			document.documentElement.style.setProperty('--color2',document.color2)
+			document.documentElement.style.setProperty('--color3',document.color3)
+			document.documentElement.style.setProperty('--color4',document.color4)
+			document.documentElement.style.setProperty('--color5',document.color5)
 		}
 		if(localStorage.shakingViolence=="undefined"){
 			localStorage.setItem("shakingViolence",0.4);
@@ -519,7 +525,13 @@
 	        return `${(v-size)/2}px`;
 	    }
 
-		
+		document.documentElement.style.setProperty('--color1',document.color1)
+		colors=[document.color1,document.color2,document.color3,document.color4,document.color5]
+		document.color1="var(--color1)"
+		document.color2="var(--color2)"
+		document.color3="var(--color3)"
+		document.color4="var(--color4)"
+		document.color5="var(--color5)"
 		document.styleSheets[0].rules[0].styleMap.set('background-color',[document.color2])
 		document.styleSheets[0].rules[0].styleMap.set('color',[document.color1])
 		
@@ -536,8 +548,8 @@
 
 		
 		//document.styleSheets[0].rules[43].styleMap.set('background-color',[document.color2])
-		document.styleSheets[0].rules[40].styleMap.set('background-color',[document.color3+"A0"])
-		document.styleSheets[0].rules[41].styleMap.set('background-color',[document.color3+"A0"])
+		document.styleSheets[0].rules[40].styleMap.set('background-color',["var(--color6)"])
+		document.styleSheets[0].rules[41].styleMap.set('background-color',["var(--color6)"])
 		//document.styleSheets[0].rules[42].styleMap.set('background-color',[document.color2])
 		
 		document.styleSheets[0].rules[2].styleMap.set('background-color',[document.color2])
@@ -551,7 +563,12 @@
 				document.styleSheets[0].rules[4].styleMap.set('color',[document.color1])
 
 		document.styleSheets[0].rules[5].styleMap.set('color',[document.color1])
-		
+		document.color1=colors[0]
+		document.color2=colors[1]
+		document.color3=colors[2]
+		document.color4=colors[3]
+		document.color5=colors[4]
+		document.color6=colors[3]+"A0"
 	</script>
 </head>
   
@@ -1442,8 +1459,14 @@
 		<p>Shaking Violence (Suggestion: Keep low.): <input id="shakingViolence" type="number"></p>
 		
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.location.reload()">
-		
+		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);
+			document.documentElement.style.setProperty('--color1',document.getElementById('color1').value);
+			document.documentElement.style.setProperty('--color2',document.getElementById('color2').value);
+			document.documentElement.style.setProperty('--color3',document.getElementById('color3').value);
+			document.documentElement.style.setProperty('--color6',document.getElementById('color3').value+'A0');
+			document.documentElement.style.setProperty('--color4',document.getElementById('color4').value);
+			document.documentElement.style.setProperty('--color5',document.getElementById('color5').value);
+			">
 		Menu Under Construction
 		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
 			
