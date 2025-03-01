@@ -22,7 +22,6 @@
 		if((localStorage.colors==undefined)||(localStorage.colors=="undefined")){
 			localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 		}else{
-			
 			document.color1=localStorage.colors.split(',')[0]
 			document.color2=localStorage.colors.split(',')[1]
 			document.color3=localStorage.colors.split(',')[2]
@@ -369,10 +368,8 @@
 			align-content:center;
 			opacity:100%;
 			background-color:black;
-			align-items:center;
 		}
 		.popup_display1b{
-			text-align:center;
 			animation: popup_displayb 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
 			position:fixed;
 			display:block;
@@ -382,14 +379,13 @@
 			bottom:0px;
 			height:"px(window.innerHeight)";
 			width:"px(window.innerWidth)";
+			text-align:center;
 			vertical-align:middle;
 			align-content:center;
 			opacity:100%;
 			background-color:black;
-			align-items:center;
 		}
 		.popup_display2a{
-			display:block;
 			position:absolute;
 			position-area:center;
 			animation: popup_displaya 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
@@ -397,13 +393,12 @@
 			outline-color:green;
 			outline-width:3px;
 			width:fit-content;
-			margin-left:auto;
-			margin-right:auto;
-			margin-top:auto;
-			margin-bottom:auto;
+			margin-left:10px;
+			margin-right:10px;
+			margin-top:10px;
+			margin-bottom:10px;
 		}
 		.popup_display2b{
-			display:block;
 			position:absolute;
 			position-area:center;
 			animation: popup_displayb 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
@@ -411,10 +406,10 @@
 			outline-color:green;
 			outline-width:3px;
 			width:fit-content;
-			margin-left:auto;
-			margin-right:auto;
-			margin-top:auto;
-			margin-bottom:auto;
+			margin-left:10px;
+			margin-right:10px;
+			margin-top:10px;
+			margin-bottom:10px;
 		}
 		.popup_display3{
 			position:absolute;
@@ -514,9 +509,42 @@
 			right:12px;
 			opacity:100%;
 			overflow-y: auto;
+			overflow-x: auto;
 			will-change: scroll-position;
-			scrollbar-width:1px;
+			scrollbar-width:none;
 			background-image:url("images/popup_background.png");
+		}
+		.tooltipcontainer{
+			position:relative
+		}
+		@keyframes tooltip_fadein{
+			from {opacity:0%;visibility:visible;}
+			to {opacity:100%;visibility:visible;}
+		}
+		@keyframes tooltip_fadeout{
+			from {opacity:100%;visibility:visible;}
+			to {opacity:0%;visibility:visible;}
+		}
+		.tooltipcontainer .tooltipContent{
+			animation: tooltip_fadeout 0.1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			visibility:hidden;
+			background-color:var(--color2);
+			background-clip:content-box;
+			color:var(--color1);
+			position:absolute;
+			z-index:100;
+			top:20px;
+			text-align:center;
+			right:-100px;
+			left:-100px;
+		}
+		.tooltipcontainer:hover .tooltipContent{
+			animation: tooltip_fadein 0.1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			visibility:visible;
+		}
+		.tooltipcontainer:hover .tooltipContent:hover{
+			animation: tooltip_fadeout 0.1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
+			visibility:hidden;
 		}
 	</style>
 	<script>
@@ -525,7 +553,7 @@
 	        return `${(v-size)/2}px`;
 	    }
 
-		document.documentElement.style.setProperty('--color1',document.color1)
+		
 		colors=[document.color1,document.color2,document.color3,document.color4,document.color5]
 		document.color1="var(--color1)"
 		document.color2="var(--color2)"
@@ -568,7 +596,8 @@
 		document.color3=colors[2]
 		document.color4=colors[3]
 		document.color5=colors[4]
-		document.color6=colors[3]+"A0"
+		document.color6=colors[2]+"A0"
+		document.documentElement.style.setProperty('--color6',document.color6)
 	</script>
 </head>
   
@@ -585,7 +614,8 @@
 	<span id="assignments_main" onclick="settingsFadeOut();" class="document_container">
   <h1>Assignments V1.1</h1>
 	<input id="clickMe" type="button" value="Add Task" onclick="popupFadeIn(document.popupTaskAdd)">
-	<p id="assigncontainer" ><p id="assign" ></p></p>
+	<input type="button" value="Add Scheduling Option (Experimental)" onclick="popupFadeIn(document.schedulingPopupAdd)">
+	<p id="assigncontainer" ><p id="assign"></p></p>
 
 
 
@@ -796,21 +826,42 @@
 	}
 	document.scheduleOptions=[]
 	function addSchedulingOption(obj){
+		if(obj[0]==undefined){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
 		getCookie("settings_scheduling",function(response){
 			x=response.value
 			if(x!=''){
-				x+=','+btoa("lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+btoa(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+				x+=','+btoa("numTriggered:1,lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
 			}else{
-				x=btoa("lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+btoa(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+				x=btoa("numTriggered:1,lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
 			}
 			setCookie("settings_scheduling",x)
 		})
+		}else{
+		getCookie("settings_scheduling",function(response){
+			x=response.value
+			x2=''
+			for(var i=0; i<obj.length;i++){
+				if(x2!=''){
+					x2+=','+btoa("numTriggered:1,lastTrigger:"+obj[i].lastTrigger+",triggerDelay:"+obj[i].triggerDelay+",timeInFutureToSchedule:"+obj[i].timeInFutureToSchedule+',taskName:'+(obj[i].task.name)+',taskCategories:'+btoa(obj[i].task.categories))
+				}else{
+					x2=btoa("numTriggered:1,lastTrigger:"+obj[i].lastTrigger+",triggerDelay:"+obj[i].triggerDelay+",timeInFutureToSchedule:"+obj[i].timeInFutureToSchedule+',taskName:'+(obj[i].task.name)+',taskCategories:'+btoa(obj[i].task.categories))
+				}
+			}
+			if(x==''){
+				x=btoa(x2)
+			}else{
+				x+=','+btoa(x2)
+			}
+			setCookie("settings_scheduling",x)
+		})
+		}
 		document.scheduleOptions.push(obj)
+		updateScheduleOpt()
 	}
 	function decodeSchedulingOptions(opt){
 		//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
-		
+		console.log("Scheduling Options:")
 			x=opt
 			if(x==''){
 				return []
@@ -818,17 +869,42 @@
 			y=x.split(',')
 			z=[]
 			y.forEach(function(arg){
+				if(atob(arg).indexOf(':')!=-1){
+				console.log(atob(arg))
 				a=atob(arg).split(',')
 				b={}
 				for(var i=0;i<a.length;i++){
+					console.log(a[i].split(':'))
 					b[a[i].split(':')[0]]=a[i].split(':')[1]
 				}
 				b['task']={}
-				b['task']['name']=b['taskName']
+				b['task']['name']=fromNumList(b['taskName'])
 				b['task']['categories']=b['taskCategories'].split(',')
 				b['taskName']=b['taskCategories']=undefined
 				z.push(b)
+				console.log(b)
+				}else{
+					z2=[]
+					atob(arg).split(',').forEach(function(arg2){
+						console.log(atob(arg2))
+						a=atob(arg2).split(',')
+						b={}
+						for(var i=0;i<a.length;i++){
+							console.log(a[i].split(':'))
+							b[a[i].split(':')[0]]=a[i].split(':')[1]
+						}
+						b['task']={}
+						b['task']['name']=fromNumList(b['taskName'])
+						b['task']['categories']=b['taskCategories'].split(',')
+						b['taskName']=b['taskCategories']=undefined
+						z2.push(b)
+						console.log(b)
+						
+					})
+					z.push(z2)
+				}
 			})
+		
 			return z
 		
 	}
@@ -853,32 +929,102 @@
 		obj={}
 		dateInternal=new Date()
 		dateInternal.setHours(0,0,0,0)
-		obj.lastTrigger=dateInternal.setFullYear(date1.split('/')[0],date1.split('/')[1]-1,date1.split('/')[2])
-		obj.triggerDelay=dateInternal.setFullYear(date2.split('/')[0],date2.split('/')[1]-1,date2.split('/')[2])-obj.lastTrigger
+		obj.lastTrigger=dateInternal.setFullYear(date1.split('-')[0],date1.split('-')[1]-1,date1.split('-')[2])
+		obj.triggerDelay=dateInternal.setFullYear(date2.split('-')[0],date2.split('-')[1]-1,date2.split('-')[2])-obj.lastTrigger
 		if(obj.triggerDelay<=0){
 			return "Error. Invalid dates"
 		}
 		dateInternal.setHours(time.split(':')[0],time.split(':')[1],0,0)
 		obj.lastTrigger-=obj.triggerDelay*numAhead
-		obj.timeInFutureToSchedule=dateInternal.setFullYear(date1.split('/')[0],date1.split('/')[1]-1,date1.split('/')[2])-obj.lastTrigger
+		obj.timeInFutureToSchedule=dateInternal.setFullYear(date1.split('-')[0],date1.split('-')[1]-1,date1.split('-')[2])-obj.lastTrigger
 		obj.task=task
+		obj.task.name=toNumList(obj.task.name)
+		console.log(obj)
 		return obj
 	}
 	
 	function tickSchedulingOptions(){
+		function insertString(string,num){
+			return string.replaceAll('%d',num)
+		}
 		currentTime=new Date().getTime()
+		x=""
+		shouldChange=false
+		
+		
 		document.scheduleOptions.forEach(function(arg){
+			if(arg!=undefined){
+			if(arg[0]==undefined){
 			if(arg.lastTrigger+arg.triggerDelay<currentTime){
+				shouldChange=true
 				dateStuff=new Date()
 				dateStuff.setTime(arg.lastTrigger+arg.timeInFutureToSchedule)
 				arg.lastTrigger+=arg.triggerDelay
-				updateCookie('tasks',btoa('complete:false#task:'+arg['task']['name']+'#date:'+dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate())+'#time:'+dateStuff.getHours()+'*'+dateStuff.getMinutes()));
-				addTask({'task':arg['task']['name'],'categories':arg['task']['categories'],'date':dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate()),'time':dateStuff.getHours()+'*'+dateStuff.getMinutes(),'index':cookieCount++,'complete':false})
+				if(arg.numTriggered==undefined){
+					arg.numTriggered=1
+				}
+				arg.numTriggered+=1;
+				
+
+				
+				updateCookie('tasks',btoa('complete:false#task:'+toNumList(insertString(fromNumList(arg['task']['name']),arg.numTriggered-1))+'#date:'+dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate())+'#time:'+dateStuff.getHours()+'*'+dateStuff.getMinutes()));
+				addTask({'task':insertString(fromNumList(arg.task.name),arg.numTriggered-1),'categories':arg['task']['categories'],'date':dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate()),'time':dateStuff.getHours()+'*'+dateStuff.getMinutes(),'index':cookieCount++,'complete':false})
 				cookieCount++;
 				replaceTasks();
+				
 				setTimeout(() =>replaceTasks(),110)
 			}
+			obj=arg
+				if(x!=''){
+					x+=','+btoa('numTriggered:'+arg.numTriggered+",lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+toNumList(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+				}else{
+					x=btoa('numTriggered:'+arg.numTriggered+",lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+toNumList(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+				}
+			}else{
+				x2=""
+				arg.forEach(function(arg2){
+					if(arg2.lastTrigger+arg2.triggerDelay<currentTime){
+						shouldChange=true
+						dateStuff=new Date()
+						dateStuff.setTime(arg2.lastTrigger+arg2.timeInFutureToSchedule)
+						arg2.lastTrigger+=arg2.triggerDelay
+						if(arg2.numTriggered==undefined){
+							arg2.numTriggered=1
+						}
+						arg2.numTriggered+=1;
+						
+		
+						
+						updateCookie('tasks',btoa('complete:false#task:'+toNumList(insertString(fromNumList(arg2['task']['name']),arg2.numTriggered-1))+'#date:'+dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate())+'#time:'+dateStuff.getHours()+'*'+dateStuff.getMinutes()));
+						addTask({'task':insertString(fromNumList(arg2.task.name),arg2.numTriggered-1),'categories':arg2['task']['categories'],'date':dateStuff.getFullYear()+'-'+(("0"+(dateStuff.getMonth()-1+2)).slice(("0"+(dateStuff.getMonth()-1+2)).length-2))+'-'+(dateStuff.getDate()),'time':dateStuff.getHours()+'*'+dateStuff.getMinutes(),'index':cookieCount++,'complete':false})
+						cookieCount++;
+						replaceTasks();
+						
+						setTimeout(() =>replaceTasks(),110)
+					}
+					obj=arg2
+						if(x2!=''){
+							x2+=','+btoa('numTriggered:'+arg2.numTriggered+",lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+toNumList(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+						}else{
+							x2=btoa('numTriggered:'+arg2.numTriggered+",lastTrigger:"+obj.lastTrigger+",triggerDelay:"+obj.triggerDelay+",timeInFutureToSchedule:"+obj.timeInFutureToSchedule+',taskName:'+toNumList(obj.task.name)+',taskCategories:'+btoa(obj.task.categories))
+						}
+				})
+				if(x!=''){
+					x+=','+btoa(x2)
+				}else{
+					x=btoa(x2)
+				}
+			}
+			}
 		})
+		if(document.lastOne==undefined){
+			document.lastOne=x
+		}
+		if(shouldChange||(document.lastOne!=x)){
+			setCookie("settings_scheduling",x)
+		}
+		document.lastOne=x
+		
 		setTimeout(() => tickSchedulingOptions(),1000);
 	}
 		
@@ -1263,7 +1409,7 @@
 	}
 	shakyObjs=[]
 	function addTask(z){
-		console.log(new Date().getHours(),':',new Date().getMinutes(),':',new Date().getSeconds(),'.',new Date().getMilliseconds(),"Info    ","Adding Task:","Date:",z['date'].replaceAll('-','/'),"Time:",z['time'].replaceAll('*',':'), "Name: \""+z['task']+"\"")
+		console.log("Adding Task:","Date:",z['date'].replaceAll('-','/'),"Time:",z['time'].replaceAll('*',':'), "Name: \""+z['task']+"\"")
 		//console.log(z)
 		spanObject=document.createElement("p")
 		spanObject.style="position:relative;"
@@ -1415,10 +1561,16 @@
 		  <img src="images/settings_gear.png" width=17 height=17 style="margin: 6px 0 2px;">
 	  </button>
   </span>
-	<span class="popup_display1a" id="schedulingPopupAdd" name="popup">
-		 <span class="popup_display2a" id="popupBody" style="width:200px;height:200px;">
+	<span class="popup_display1a" id="schedulingPopupAdd" name="popup" onclick="setTimeout(() => {if(document.popupShouldStay==false){popupFadeOut()};document.popupShouldStay=false;},100)">
+		 <span class="popup_display2a" id="popupBody" style="width:200px;height:200px;" onclick="document.popupShouldStay=true;">
 			 <span class="popup_content" id="popupContent">
-				 
+				 <p></p>
+				<input type="date" id="date1" placeholder="Date 1" required>
+				 <input type="date" id="date2" placeholder="Date 2" required>
+				<input type="time" id="time" placeholder="Time" required><p></p>
+				<input type="text" id="taskName" placeholder="Task Name" required>
+				<input type="number" id="iterInFutureToShow" placeholder="Num To Show In Future" required>
+				<input id="clickMe" type="button" value="Confirm" onclick="popupFadeOut();addSchedulingOption(convertFromDatesToSchedulingOptions(document.getElementById('date1').value,document.getElementById('date2').value,document.getElementById('time').value,document.getElementById('iterInFutureToShow').value,{name:document.getElementById('taskName').value,categories:[]}))" >
 			 </span>
 			 <span class="popup_display3" id="popupBorder1"></span>
 			 <span class="popup_display4" id="popupBorder2"></span>
@@ -1450,6 +1602,178 @@
 			<span class="popup_display10" id="popupBorder8"></span>
 		</span>
 	</span>
+
+	<span class="popup_display1a" style='z-index:75;' id="schedulingOptionsMenu" name="popup" onclick="setTimeout(() => {if(document.popupShouldStay==false){popupFadeOut()};document.popupShouldStay=false;},100)">
+		<span class="popup_display2a" id="popupBody" style="width:400px;height:600px;z-index:76;" onclick="document.popupShouldStay=true;">
+			<span class="popup_content" id="popupContent">
+				<script>
+					function updateScheduleOpt(){
+						x=document.getElementById('schedulingOptionsMenu').children[0].children[0]
+						for(var i=1;i<x.length;i++){
+							x[i].remove()
+						}
+						triggerReloadSchedulingOptionsMenu()
+						setCooldown(()=>{
+						triggerReloadSchedulingOptionsMenu()},100)
+					}
+					function updateStuff(id){
+						document.scheduleOptions[id]=undefined
+						x=document.getElementById('schedulingOptionsMenu').children[0].children[0]
+						for(var i=1;i<x.length;i++){
+							x[i].remove()
+						}
+						setCooldown(()=>{
+						triggerReloadSchedulingOptionsMenu()},100)
+					}
+					function triggerReloadSchedulingOptionsMenu(){
+					if(document.timeline.currentTime>1000){
+						content=document.getElementById('schedulingOptionsMenu').children[0].children[0]
+						index=-1
+						document.scheduleOptions.forEach(function(arg){
+							console.log(arg)
+							index+=1;
+							if(arg!=undefined){
+							elementMain=document.createElement("span")
+							elementMain.dataset["index"]=index
+							elementMain.className="tooltipcontainer"
+
+							deleteButton=document.createElement("button")
+							
+							deleteButtonImage=document.createElement('img')
+							deleteButtonImage.src="/images/delete_option.png"
+							deleteButtonImage.style.width="12px"
+							deleteButtonImage.style.height="12px"
+							deleteButtonImage.style.top="1px"
+							deleteButtonImage.style.right="4px"
+							deleteButtonImage.style.marginLeft="0px"
+							deleteButtonImage.style.marginTop="0px"
+							deleteButtonImage.style.paddingLeft="0px"
+							deleteButtonImage.style.paddingTop="0px"
+							deleteButtonImage.style.position="absolute"
+							deleteButton.appendChild(deleteButtonImage)
+							deleteButton.style.width="20px"
+							deleteButton.style.height="20px"
+							deleteButton.onclick=function(event){
+								updateStuff(this.parentElement.dataset['index'])
+							}
+							
+							elementSecondary=document.createElement("span")
+							elementSecondary.className="tooltipContent"
+							
+							weekDayNumbers=undefined
+							time=""
+							if(arg[0]==undefined){
+								daysBetween=arg.triggerDelay/86400000
+								i=0
+								while(daysBetween>0){
+									i+=1;
+									daysBetween-=1;
+								}
+								daysBetween=i
+
+								
+								daysBetweenText=""+daysBetween+" days"
+								if(daysBetween==7){
+									daysBetweenText='week'
+								}else if(daysBetween==1){
+									daysBetweenText='day'
+								}
+								taskName=fromNumList(arg.task.name)
+								t=new Date()
+								t.setTime(arg.lastTrigger-0+(arg.timeInFutureToSchedule-0))
+								if(t.getHours()>=12){
+									if(t.getHours()-12==0){
+										time=""+(t.getHours())+":"+t.getMinutes()+" PM"
+									}else{
+										time=""+(t.getHours()-12)+":"+t.getMinutes()+" PM"
+									}
+								}else{
+									if(t.getHours()==0){
+										time=""+(t.getHours()+12)+":"+t.getMinutes()+" AM"
+									}else{
+										time=""+(t.getHours())+":"+t.getMinutes()+" AM"
+									}
+								}
+							}else{
+								daysBetweenText="week"
+								weekDayNumbers=[]
+								arg.forEach(function(arg2){
+									t=new Date()
+									t.setTime(arg2.lastTrigger+arg2.timeInFutureToSchedule)
+									weekDayNumbers.push(t.getDay())
+								})
+								taskName=arg[0].task.name
+								t=new Date()
+								t.setTime(arg[0].lastTrigger+arg[0].timeInFutureToSchedule)
+								if(t.getHours()>=12){
+									if(t.getHours()-12==0){
+										time=""+(t.getHours())+":"+t.getMinutes()+" PM"
+									}else{
+										time=""+(t.getHours()-12)+":"+t.getMinutes()+" PM"
+									}
+								}else{
+									if(t.getHours()==0){
+										time=""+(t.getHours()+12)+":"+t.getMinutes()+" AM"
+									}else{
+										time=""+(t.getHours())+":"+t.getMinutes()+" AM"
+									}
+								}
+							}
+							elementMain.textContent=taskName
+								elementMain.appendChild(deleteButton)
+							elementMain.appendChild(elementSecondary)
+							elementTertiary=document.createElement('span')
+							elementTertiary.textContent="Every "+daysBetweenText
+							elementSecondary.appendChild(elementTertiary)
+							if(weekDayNumbers!=undefined){
+								elementTertiary=document.createElement('span')
+								elementTertiary.textContent=" on "
+								elementSecondary.appendChild(elementTertiary)
+								hasAddedAlready=false;
+								for(var i=0;i<7;i++){
+									if(weekDayNumbers.indexOf(i)!=-1){
+										if(hasAddedAlready){
+											elementTertiary.textContent[elementTertiary.textContent.length-1]=','
+											elementTertiary.textContent+=' '
+										}
+										elementTertiary=document.createElement('span')
+										elementTertiary.textContent=['Sunday',"Monday",'Tuesday','Wednesday','Thursday','Friday','Saturday'][i]+" "
+										elementSecondary.appendChild(elementTertiary)
+										hasAddedAlready=true;
+									}
+									elementTertiary.textContent=elementTertiary.textContent.slice(0,elementTertiary.textContent.length-1)
+								}
+							}else if(daysBetweenText=="week"){
+								elementTertiary=document.createElement('span')
+								t=new Date()
+								console.log(arg)
+								t.setTime(arg.lastTrigger-0+(arg.timeInFutureToSchedule-0))
+								r=['Sunday',"Monday",'Tuesday','Wednesday','Thursday','Friday','Saturday']
+								elementTertiary.textContent=" on "+r[t.getDay()]
+								console.log(t.getDay())
+								elementSecondary.appendChild(elementTertiary)
+							}
+							elementTertiary=document.createElement('span')
+							elementTertiary.textContent=" at "+time
+							elementSecondary.appendChild(elementTertiary)
+							document.getElementById('popupContent').appendChild(elementMain)
+							}
+						})
+					}
+					}
+				</script>
+			</span>
+			<span class="popup_display3" id="popupBorder1"></span>
+			<span class="popup_display4" id="popupBorder2"></span>
+			<span class="popup_display5" id="popupBorder3"></span>
+			<span class="popup_display6" id="popupBorder4"></span>
+			<span class="popup_display7" id="popupBorder5"></span>
+			<span class="popup_display8" id="popupBorder6"></span>
+			<span class="popup_display9" id="popupBorder7"></span>
+			<span class="popup_display10" id="popupBorder8"></span>
+		</span>
+	</span>
+		
 	<span class="settings_menu" id="settings_menu" style="overflow-y: auto;will-change: scroll-position;scrollbar-color:transparent;scrollbar-gutter:transparent;scrollbar-width:2px;">
 		<p>Document Text Color: <input id="color1" type="color"></p>
 		<p>Document Background Color: <input id="color2" type="color"></p>
@@ -1459,21 +1783,14 @@
 		<p>Shaking Violence (Suggestion: Keep low.): <input id="shakingViolence" type="number"></p>
 		
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);
-			document.documentElement.style.setProperty('--color1',document.getElementById('color1').value);
+		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.documentElement.style.setProperty('--color1',document.getElementById('color1').value);
 			document.documentElement.style.setProperty('--color2',document.getElementById('color2').value);
 			document.documentElement.style.setProperty('--color3',document.getElementById('color3').value);
 			document.documentElement.style.setProperty('--color6',document.getElementById('color3').value+'A0');
 			document.documentElement.style.setProperty('--color4',document.getElementById('color4').value);
-			document.documentElement.style.setProperty('--color5',document.getElementById('color5').value);
-			">
-		Menu Under Construction
-		<span id="settings_scheduling_menu" style="display: block;clip-path:margin-box;position:relative;height:0px;top:50px;position:relative">
-			
-			Incomplete menu!
-			
-		</span>
-
+			document.documentElement.style.setProperty('--color5',document.getElementById('color5').value);">
+		<input type="button" value="Open Autoschedule Details" onclick="popupFadeIn(document.popupSchedulingView);triggerReloadSchedulingOptionsMenu();">
+		
 
 
 
@@ -1502,6 +1819,11 @@
 		document.popupTaskAdd=document.getElementById('popupTaskAdd')
 		document.popupTaskAddVisible=false
 		document.popupTaskAdd.remove()
+		
+		document.popupSchedulingView=document.getElementById('schedulingOptionsMenu')
+		document.popupSchedulingViewVisible=false
+		
+		document.popupSchedulingView.remove()
 	</script>
 </body>
 </html>
