@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Assignments</title>
 	<script>
+		window.onresize=function(event){
+			n=document.getElementsByName('popup')
+			n.forEach(function(arg){
+				arg.children[0].style['left']=px((window.innerWidth-(arg.children[0].style['width'].slice(0,arg.children[0].style['width'].length-2)-0))/2)
+				arg.children[0].style['top']=px((window.innerHeight-(arg.children[0].style['height'].slice(0,arg.children[0].style['height'].length-2)-0))/2)
+			})
+			}
 		document.color1="#000000";
 		document.color2="#FFFFFF";
 		document.color3="#fcfcfc";
@@ -686,6 +693,7 @@
 				document.body.appendChild(popup)
 				popup.children[0].className="popup_display2a"
 				popup.className="popup_display1a"
+			  window.onresize()
 			}
 
 
