@@ -17,6 +17,8 @@
 		document.color3="#fcfcfc";
 		document.color5="#131313";
 		document.color4="#FF0000";
+		document.color7="#24FA32";
+		document.color8="#243632";
 		getColor=function(id){
 			if(id==1){
 				return document.color1
@@ -38,11 +40,19 @@
 			}else{
 				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5])
 			}
+			if(localStorage.colors.split(',')[5]!=undefined){
+				document.color7=localStorage.colors.split(',')[5]
+				document.color8=localStorage.colors.split(',')[6]
+			}else{
+				localStorage.setItem('colors',[document.color1,document.color2,document.color3,document.color4,document.color5,document.color7,document.color8])
+			}
 			document.documentElement.style.setProperty('--color1',document.color1)
 			document.documentElement.style.setProperty('--color2',document.color2)
 			document.documentElement.style.setProperty('--color3',document.color3)
 			document.documentElement.style.setProperty('--color4',document.color4)
 			document.documentElement.style.setProperty('--color5',document.color5)
+			document.documentElement.style.setProperty('--color7',document.color7)
+			document.documentElement.style.setProperty('--color8',document.color8)
 		}
 		if(localStorage.shakingViolence=="undefined"){
 			localStorage.setItem("shakingViolence",0.4);
@@ -132,11 +142,15 @@
 			color:"document.color1";
 		}
 		.seperator{
-			width:98%;
+			min-width:"px(window.innerWidth)";
 			text-align:center;
 			border-bottom:1px solid #adadad;
 			line-height:0.1em;
 			margin: 10px 0 20px;
+			max-height:0px;
+			right:0px;
+			left:0px;
+			display:block;
 			background-color:"document.color3";
 			position: absolute;
 			color:"document.color1";
@@ -144,6 +158,9 @@
 		.seperator2{
 			background-color:"window.getColor(3)";
 			padding:0 5px;
+			height:0px;
+			right:0px;
+			left:0px;
 			color:"document.color1";
 		}
 		.settings_button{
@@ -683,7 +700,7 @@
 
 			function popupFadeOut(){
 				if(document.getElementsByName("popup")[0]!=undefined){
-					popup=document.getElementsByName("popup")[0]
+					popup=document.getElementsByName("popup")[document.getElementsByName("popup").length-1]
 					popup.children[0].className="popup_display2b"
 					popup.className="popup_display1b"
 					setTimeout(() => {popup.remove()},1000)
@@ -878,11 +895,11 @@
 			z=[]
 			y.forEach(function(arg){
 				if(atob(arg).indexOf(':')!=-1){
-				console.log(atob(arg))
+				//console.log(atob(arg))
 				a=atob(arg).split(',')
 				b={}
 				for(var i=0;i<a.length;i++){
-					console.log(a[i].split(':'))
+					//console.log(a[i].split(':'))
 					b[a[i].split(':')[0]]=a[i].split(':')[1]
 				}
 				b['task']={}
@@ -894,11 +911,11 @@
 				}else{
 					z2=[]
 					atob(arg).split(',').forEach(function(arg2){
-						console.log(atob(arg2))
+						//console.log(atob(arg2))
 						a=atob(arg2).split(',')
 						b={}
 						for(var i=0;i<a.length;i++){
-							console.log(a[i].split(':'))
+							//console.log(a[i].split(':'))
 							b[a[i].split(':')[0]]=a[i].split(':')[1]
 						}
 						b['task']={}
@@ -906,7 +923,7 @@
 						b['task']['categories']=b['taskCategories'].split(',')
 						b['taskName']=b['taskCategories']=undefined
 						z2.push(b)
-						console.log(b)
+						//console.log(b)
 						
 					})
 					z.push(z2)
@@ -949,6 +966,35 @@
 		obj.task.name=toNumList(obj.task.name)
 		console.log(obj)
 		return obj
+	}
+	function convertFromWeekdaysToSchedulingOptions(week,time,numAhead,days,task){
+		if(days.indexOf('true')==-1){
+			return []
+		}else{
+			obj2=[]
+			//Obj:{lastTrigger:time(int),triggerDelay:time(int),timeInFutureToSchedule:time(int),task:{name:(str),categories:arr(str)}}
+			currentTime=new Date().getTime()
+			obj={}
+			week=week.split('-W')
+			dateInternal=new Date()
+			dateInternal.setHours(0,0,0,0)
+			dateInternal.setFullYear(week[0]-0,0,0)
+			dateInternal.setTime(dateInternal.getTime()+(7*24*60*60*1000)*(week[1]-0))
+			obj.lastTrigger=dateInternal.getTime()
+			obj.triggerDelay=7*24*60*60*1000
+			dateInternal.setHours(time.split(':')[0],time.split(':')[1],0,0)
+			obj.lastTrigger-=obj.triggerDelay*numAhead
+			
+			obj.task=task
+			obj.task.name=toNumList(obj.task.name)
+			for(var i=0;i<7;i++){
+				if(days[i]=='true'){
+					obj2.push({timeInFutureToSchedule:dateInternal.getTime()+(i+1)*24*60*60*1000-obj.lastTrigger,...obj})
+				}
+			}
+			console.log(obj2)
+			return obj2
+		}
 	}
 	
 	function tickSchedulingOptions(){
@@ -1123,6 +1169,9 @@
 			replaceTasks2()
 				if(document.getElementById('assign').children[0]!=undefined){
 				replaceTasks2()
+					if(document.getElementById('assign').children[0]!=undefined){
+					replaceTasks2()
+					}
 				}
 			}
 			if(document.getElementById('noTasksMessage')){
@@ -1145,13 +1194,13 @@
 						y=document.createElement('span')
 						y['textContent']=date
 						a.dataset['date']=date
-						a['style']="position:absolute";
+						a['style']="position:relative";
 						y['style']="position:relative";
 						a.className='seperator';
 						y.className='seperator2';
 						a.appendChild(y)
 						objcount++
-						a.style.top=px(objcount*20+20)
+						//a.style.top=px(objcount*20+20)
 						document.getElementById('assign').appendChild(a)
 				x=document.getElementById('assign').children
 				x=[x[x.length-1],...x]
@@ -1169,8 +1218,6 @@
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
 						toggleTaskCompleted(this.dataset['index']);
-
-						if(this.parentElement.children[1].children[0]!=undefined){
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
@@ -1179,8 +1226,7 @@
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							//console.log('test')
 						}
-						}
-											}
+					}
 				}
 				day=new Date()
 				if(x[i].dataset['date']||true){
@@ -1197,8 +1243,8 @@
 				if(a>y){
 					if(x[i].children[1]!=undefined){
 					if(x[i].children[0].checked==false){
-						x[i].style.top=px(solidObjCount*3+(objcount-solidObjCount)*10);
-						x[i].newPos={x:x[i].style['x'],y:px(solidObjCount*1-shakyobjcount*15+(objcount-solidObjCount)*15)}
+						x[i].style.top=px(0);
+						x[i].newPos={x:x[i].style['x'],y:px(-13*objcount)}
 						shakyobjcount++
 						//shakyObjs[shakyObjs.length]=x[i];
 						//setTimeout(() => quakeElement(shakyObjs.pop(0)), 100);
@@ -1206,28 +1252,29 @@
 					}
 						
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20.5+110)]},500)
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(-13*objcount)]},500)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
 						//console.log(x[i])
-						x[i].style.top=px(objcount*20+110)
+						x[i].style.top=px(-13*objcount)
 						//document.todochange.push([x[i],px(objcount*20+115)])
 						//(todoChange(r))
+						solidObjCount++
 					}
 				}else{
 					if(x[i].children[1]!=undefined){
-						x[i].animate({'top':[x[i].style.top,px(-solidObjCount*15+(objcount-solidObjCount)*18)]},500)
-						x[i].style.top=px(-solidObjCount*15+(objcount-solidObjCount)*17)
+						x[i].animate({'top':[x[i].style.top,px(-13*objcount)]},500)
+						x[i].style.top=px(-13*objcount)
 						//setTimeout((r=[x[i],px(-solidObjCount*15+(objcount-solidObjCount)*17)]) => (todoChange(r)),objcount*10)
 						//document.todochange.push([x[i],px(objcount*20-solidObjCount*17-objcount*2)])
 						//setTimeout(() => (todoChange(document.todochange.pop())),objcount*10)
 						
 						solidObjCount++
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(objcount*20+110)]},500)
-						x[i].style.top=px(objcount*20+110)
+						x[i].animate({'top':[px(getXY(x[i]).y-10),px(-13*objcount)]},500)
+						x[i].style.top=px(-13*objcount)
 						//setTimeout((r=[x[i],px(objcount*20+115)]) => (todoChange(r)),objcount*10)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
-						
+						solidObjCount++
 					}
 				}
 				}
@@ -1246,13 +1293,13 @@
 						y=document.createElement('span')
 						y['textContent']=date
 						a.dataset['date']=date
-						a['style']="position:absolute";
+						a['style']="position:relative";
 						y['style']="position:relative";
 						a.className='seperator';
 						y.className='seperator2';
 						a.appendChild(y)
 						objcount++
-						a.style.top=px(objcount*20+20)
+						//a.style.top=px(objcount*20+20)
 						document.getElementById('assign').appendChild(a)
 						a.animate({ 'opacity': [0,1]},1000)
 						y.animate({ 'opacity': [0,1]},1000)
@@ -1523,13 +1570,13 @@
 					y=document.createElement('span')
 					y['textContent']=date
 					x.dataset['date']=date
-					x['style']="position:absolute";
+					x['style']="position:relative";
 					y['style']="position:relative";
 					x.className='seperator';
 					y.className='seperator2';
 					x.appendChild(y)
 					objcount++
-					x.style.top=px(objcount*20+20)
+					//x.style.top=px(objcount*20+20)
 					document.getElementById('assign').appendChild(x)
 				}
 				objcount++
@@ -1582,6 +1629,59 @@
 				<input type="text" id="taskName" placeholder="Task Name" required>
 				<input type="number" id="iterInFutureToShow" placeholder="Num To Show In Future" required>
 				<input id="clickMe" type="button" value="Confirm" onclick="popupFadeOut();addSchedulingOption(convertFromDatesToSchedulingOptions(document.getElementById('date1').value,document.getElementById('date2').value,document.getElementById('time').value,document.getElementById('iterInFutureToShow').value,{name:document.getElementById('taskName').value,categories:[]}))" >
+			 </span>
+			 <span class="popup_display3" id="popupBorder1"></span>
+			 <span class="popup_display4" id="popupBorder2"></span>
+			 <span class="popup_display5" id="popupBorder3"></span>
+			 <span class="popup_display6" id="popupBorder4"></span>
+			 <span class="popup_display7" id="popupBorder5"></span>
+			 <span class="popup_display8" id="popupBorder6"></span>
+			 <span class="popup_display9" id="popupBorder7"></span>
+			 <span class="popup_display10" id="popupBorder8"></span>
+		</span>
+	</span>
+	<span class="popup_display1a" id="schedulingPopupAddAlt" name="popup" onclick="setTimeout(() => {if(document.popupShouldStay==false){popupFadeOut()};document.popupShouldStay=false;},100)">
+		 <span class="popup_display2a" id="popupBody" style="width:600px;height:200px;" onclick="document.popupShouldStay=true;">
+			 <span class="popup_content" id="popupContent">
+				 <p></p>
+				<input type="week" id="date1" placeholder="Start Week" required>
+				<input type="time" id="time" placeholder="Time" required><p></p>
+				<input type="text" id="taskName" placeholder="Task Name" required>
+				 <input type="number" id="iterInFutureToShow" placeholder="Num To Show In Future" required>
+				
+				
+				<p>
+				<input type="button" id="wkday-1" value="Sun" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-2" value="Mon" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-3" value="Tue" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-4" value="Wed" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-5" value="Thu" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-6" value="Fri" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				<input type="button" id="wkday-7" value="Sat" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
+				</p>
+				<input id="clickMe" type="button" value="Confirm" onclick="
+					//popupFadeOut();
+					addSchedulingOption(
+						convertFromWeekdaysToSchedulingOptions(
+							document.getElementById('date1').value,
+							document.getElementById('time').value,
+							document.getElementById('iterInFutureToShow').value,
+							[
+								document.getElementById('wkday-1').dataset['active'],
+								document.getElementById('wkday-2').dataset['active'],
+								document.getElementById('wkday-3').dataset['active'],
+								document.getElementById('wkday-4').dataset['active'],
+								document.getElementById('wkday-5').dataset['active'],
+								document.getElementById('wkday-6').dataset['active'],
+								document.getElementById('wkday-7').dataset['active']
+							],
+							{
+								name:document.getElementById('taskName').value,
+								categories:[]
+							}
+						)
+					)
+					" >
 			 </span>
 			 <span class="popup_display3" id="popupBorder1"></span>
 			 <span class="popup_display4" id="popupBorder2"></span>
@@ -1710,12 +1810,13 @@
 								weekDayNumbers=[]
 								arg.forEach(function(arg2){
 									t=new Date()
-									t.setTime(arg2.lastTrigger+arg2.timeInFutureToSchedule)
+									t.setTime(arg2.lastTrigger-0+(arg2.timeInFutureToSchedule-0))
 									weekDayNumbers.push(t.getDay())
 								})
-								taskName=arg[0].task.name
+								taskName=fromNumList(arg[0].task.name)
 								t=new Date()
-								t.setTime(arg[0].lastTrigger+arg[0].timeInFutureToSchedule)
+								console.log(arg[0].lastTrigger,arg[0].timeInFutureToSchedule)
+								t.setTime(arg[0].lastTrigger-0+(arg[0].timeInFutureToSchedule-0))
 								if(t.getHours()>=12){
 									if(t.getHours()-12==0){
 										time=""+(t.getHours())+":"+t.getMinutes()+" PM"
@@ -1744,7 +1845,7 @@
 								for(var i=0;i<7;i++){
 									if(weekDayNumbers.indexOf(i)!=-1){
 										if(hasAddedAlready){
-											elementTertiary.textContent[elementTertiary.textContent.length-1]=','
+											elementTertiary.textContent[elementTertiary.textContent.length-1]=', '
 											elementTertiary.textContent+=' '
 										}
 										elementTertiary=document.createElement('span')
@@ -1752,8 +1853,9 @@
 										elementSecondary.appendChild(elementTertiary)
 										hasAddedAlready=true;
 									}
-									elementTertiary.textContent=elementTertiary.textContent.slice(0,elementTertiary.textContent.length-1)
+									
 								}
+								elementTertiary.textContent=elementTertiary.textContent.slice(0,elementTertiary.textContent.length-1)
 							}else if(daysBetweenText=="week"){
 								elementTertiary=document.createElement('span')
 								t=new Date()
@@ -1791,15 +1893,19 @@
 		<p>Document Background Color B: <input id="color3" type="color"></p>
 		<p>Document Overdue Flash Color: <input id="color4" type="color"></p>
 		<p>Task Finished Strikethrough Color: <input id="color5" type="color"></p>
+		<p>Toggle Color Active: <input id="color7" type="color"></p>
+		<p>Toggle Color Inactive: <input id="color8" type="color"></p>
 		<p>Shaking Violence (Suggestion: Keep low.): <input id="shakingViolence" type="number"></p>
 		
 		<!--localStorage.colors=[document.color1,document.color2,document.color3,document.color4]-->
-		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value]);document.documentElement.style.setProperty('--color1',document.getElementById('color1').value);
+		<input type="button" value="Save" onclick="localStorage.setItem('shakingViolence',document.getElementById('shakingViolence').value);localStorage.setItem('colors',[document.getElementById('color1').value,document.getElementById('color2').value,document.getElementById('color3').value,document.getElementById('color4').value,document.getElementById('color5').value,document.getElementById('color7').value,document.getElementById('color8').value]);document.documentElement.style.setProperty('--color1',document.getElementById('color1').value);
 			document.documentElement.style.setProperty('--color2',document.getElementById('color2').value);
 			document.documentElement.style.setProperty('--color3',document.getElementById('color3').value);
 			document.documentElement.style.setProperty('--color6',document.getElementById('color3').value+'A0');
 			document.documentElement.style.setProperty('--color4',document.getElementById('color4').value);
-			document.documentElement.style.setProperty('--color5',document.getElementById('color5').value);">
+			document.documentElement.style.setProperty('--color5',document.getElementById('color5').value);
+			document.documentElement.style.setProperty('--color7',document.getElementById('color7').value);
+			document.documentElement.style.setProperty('--color8',document.getElementById('color8').value);">
 		<input type="button" value="Open Autoschedule Details" onclick="popupFadeIn(document.popupSchedulingView);triggerReloadSchedulingOptionsMenu();">
 		
 
@@ -1819,6 +1925,8 @@
 		document.getElementById('color3').value=document.color3
 		document.getElementById('color4').value=document.color4
 		document.getElementById('color5').value=document.color5
+		document.getElementById('color7').value=document.color7
+		document.getElementById('color8').value=document.color8
 		document.getElementById('shakingViolence').value=localStorage.shakingViolence
 		 document.settings_menu=document.getElementById('settings_menu')
 		document.settingsSchedulingVisible=false
@@ -1826,6 +1934,10 @@
 		 document.schedulingPopupAdd=document.getElementById('schedulingPopupAdd')
 		document.schedulingPopupAddVisible=false
 		document.schedulingPopupAdd.remove()
+		
+		 document.schedulingPopupAddb=document.getElementById('schedulingPopupAddAlt')
+		document.schedulingPopupAddbVisible=false
+		document.schedulingPopupAddb.remove()
 		
 		document.popupTaskAdd=document.getElementById('popupTaskAdd')
 		document.popupTaskAddVisible=false
@@ -1844,4 +1956,6 @@
 Bugs!
 date markers do not shift properly with window resizes
 duplicate date markers cause large stacks!
+Todo:
+Add notifications: x=new Notification("test", {body:"test2",requireInteraction:true})
 -->
