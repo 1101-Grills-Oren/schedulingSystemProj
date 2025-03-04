@@ -7,10 +7,11 @@
 	<script>
 		window.onresize=function(event){
 			n=document.getElementsByName('popup')
+			if(Notification==undefined){
 			n.forEach(function(arg){
 				arg.children[0].style['left']=px((window.innerWidth-(arg.children[0].style['width'].slice(0,arg.children[0].style['width'].length-2)-0))/2)
 				arg.children[0].style['top']=px((window.innerHeight-(arg.children[0].style['height'].slice(0,arg.children[0].style['height'].length-2)-0))/2)
-			})
+			})}
 			}
 		document.color1="#000000";
 		document.color2="#FFFFFF";
