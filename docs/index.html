@@ -1661,7 +1661,7 @@
 				<input type="button" id="wkday-7" value="Sat" style="background-color: var(--color8); width: 30px; text-align:center; padding-left:0px; padding-right:0px;" data-active="false" onclick="if(this.dataset['active']=='false'){this.dataset['active']='true';this.style['background-color']='var(--color7)';this.style['borderColor']='var(--color7)'}else{this.dataset['active']='false';this.style['background-color']='var(--color8)';this.style['borderColor']=''}" required>
 				</p>
 				<input id="clickMe" type="button" value="Confirm" onclick="
-					//popupFadeOut();
+					popupFadeOut();
 					addSchedulingOption(
 						convertFromWeekdaysToSchedulingOptions(
 							document.getElementById('date1').value,
