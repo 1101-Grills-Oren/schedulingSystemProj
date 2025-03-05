@@ -7,7 +7,7 @@
 	<script>
 		window.onresize=function(event){
 			n=document.getElementsByName('popup')
-			if(Notification==undefined){
+			if(true){
 			n.forEach(function(arg){
 				arg.children[0].style['left']=px((window.innerWidth-(arg.children[0].style['width'].slice(0,arg.children[0].style['width'].length-2)-0))/2)
 				arg.children[0].style['top']=px((window.innerHeight-(arg.children[0].style['height'].slice(0,arg.children[0].style['height'].length-2)-0))/2)
@@ -388,9 +388,7 @@
 			bottom:0px;
 			height:"px(window.innerHeight)";
 			width:"px(window.innerWidth)";
-			text-align:center;
-			vertical-align:middle;
-			align-content:center;
+			
 			opacity:100%;
 			background-color:black;
 		}
@@ -404,37 +402,32 @@
 			bottom:0px;
 			height:"px(window.innerHeight)";
 			width:"px(window.innerWidth)";
-			text-align:center;
-			vertical-align:middle;
-			align-content:center;
+			
 			opacity:100%;
 			background-color:black;
 		}
 		.popup_display2a{
-			position:absolute;
-			position-area:center;
+			align-content:center;
+			text-align:center;
+			position:fixed;
+			display:block;
 			animation: popup_displaya 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
 			opacity:100%;
 			outline-color:green;
 			outline-width:3px;
 			width:fit-content;
-			margin-left:10px;
-			margin-right:10px;
-			margin-top:10px;
-			margin-bottom:10px;
 		}
 		.popup_display2b{
+			align-content:center;
+			position:fixed;
+			text-align:center;
+			display:block;
 			position:absolute;
-			position-area:center;
 			animation: popup_displayb 1s cubic-bezier(0.46, 0.18, 0.76, 0.48) 0s 1 normal;
 			opacity:100%;
 			outline-color:green;
 			outline-width:3px;
 			width:fit-content;
-			margin-left:10px;
-			margin-right:10px;
-			margin-top:10px;
-			margin-bottom:10px;
 		}
 		.popup_display3{
 			position:absolute;
@@ -1231,7 +1224,9 @@
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
 						toggleTaskCompleted(this.dataset['index']);
-						if(this.parentElement.children[1].children[0]){
+						if(this.parentElement.children[1]!=undefined){
+						if(this.parentElement.children[1].children!=undefined){
+						if(this.parentElement.children[1].children[0]!=undefined){
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
@@ -1239,6 +1234,8 @@
 						}else{
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							//console.log('test')
+						}
+						}
 						}
 						}
 					}
