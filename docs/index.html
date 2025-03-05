@@ -831,7 +831,8 @@
 			//document.o.el.children[0].animate({ 'color': ['black','white']},1000)
 			obj.el.style['opacity']=0
 			obj.el.animate({ 'opacity': [1,0]},1000)
-			setTimeout(() => obj.el.remove(),1000)
+			obj.el.dataset['fade']=true;
+			setTimeout(() => obj.el.remove(),1500)
 			setTimeout(() => replaceTasks(), 1001);
           delete obj;
         }
@@ -981,6 +982,7 @@
 			dateInternal.setHours(0,0,0,0)
 			dateInternal.setFullYear(week[0]-0,0,0)
 			dateInternal.setTime(dateInternal.getTime()+(7*24*60*60*1000)*(week[1]-0))
+			dateInternal.setTime(dateInternal.getTime()-(24*60*60*1000)*(dateInternal.getDay()))
 			obj.lastTrigger=dateInternal.getTime()
 			obj.triggerDelay=7*24*60*60*1000
 			dateInternal.setHours(time.split(':')[0],time.split(':')[1],0,0)
@@ -1097,10 +1099,18 @@
 		count=0
 		if(z[0]!=undefined){
 		while((i<z.length-1)&&(count<500)){
+			if(z[i]!=undefined){
 			if((i>=0)&(z[i].dataset['date']!=undefined)&(z[i+1].dataset['date']!=undefined)){
 				
 				d1=z[i].dataset['date'].split('-')
+				d1[0]=d1[0]-0
+				d1[1]=d1[1]-0
+				d1[2]=d1[2]-0
 				d2=z[i+1].dataset['date'].split('-')
+				d2[0]=d2[0]-0
+				d2[1]=d2[1]-0
+				d2[2]=d2[2]-0
+				
 				//day.setHours(t1[0],t1[1])
 				//d1=day.setFullYear(d1[0],d1[1],d1[2])
 				//day.setHours(t2[0],t2[1])
@@ -1158,6 +1168,8 @@
 					i++
 				}
 			}else{
+				i++
+			}}else{
 				i++
 			}
 			count++
@@ -1219,6 +1231,7 @@
 				if(x[i].children[1]!=undefined){
 					x[i].children[0].onclick=function(){
 						toggleTaskCompleted(this.dataset['index']);
+						if(this.parentElement.children[1].children[0]){
 						if(this.parentElement.children[1].children[0].className!="option_clicked_line_a"){
 							this.parentElement.children[1].children[0].className="option_clicked_line_a"
 							//this.parentElement.style.setProperty('color','#FF0000')
@@ -1226,6 +1239,7 @@
 						}else{
 							this.parentElement.children[1].children[0].className="option_clicked_line_b"							//this.parentElement.style.setProperty('color','#FF0000')
 							//console.log('test')
+						}
 						}
 					}
 				}
@@ -1241,6 +1255,9 @@
 						v[i][0].style['top']=v[i][1]
 					}
 				}
+				if(x[i].dataset['fade']==true){
+					objcount--;
+				}
 				if(a>y){
 					if(x[i].children[1]!=undefined){
 					if(x[i].children[0].checked==false){
@@ -1253,7 +1270,7 @@
 					}
 						
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(-13*objcount)]},500)
+						x[i].animate({'top':["inital",px(-13*objcount)]},500)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
 						//console.log(x[i])
 						x[i].style.top=px(-13*objcount)
@@ -1263,7 +1280,7 @@
 					}
 				}else{
 					if(x[i].children[1]!=undefined){
-						x[i].animate({'top':[x[i].style.top,px(-13*objcount)]},500)
+						x[i].animate({'top':["inital",px(-13*objcount)]},500)
 						x[i].style.top=px(-13*objcount)
 						//setTimeout((r=[x[i],px(-solidObjCount*15+(objcount-solidObjCount)*17)]) => (todoChange(r)),objcount*10)
 						//document.todochange.push([x[i],px(objcount*20-solidObjCount*17-objcount*2)])
@@ -1271,7 +1288,7 @@
 						
 						solidObjCount++
 					}else{
-						x[i].animate({'top':[px(getXY(x[i]).y-10),px(-13*objcount)]},500)
+						x[i].animate({'top':["inital",px(-13*objcount)]},500)
 						x[i].style.top=px(-13*objcount)
 						//setTimeout((r=[x[i],px(objcount*20+115)]) => (todoChange(r)),objcount*10)
 						//document.todochange.push([x[i],px(objcount*20.5+115)])
@@ -1285,6 +1302,10 @@
 				}
 				if(i+2<=x.length){
 					if((x[i].children[1]==undefined)&&(x[i+1].children[1]==undefined)){
+						x[i].remove()
+						objcount--
+					}
+					else if((x[i].classname=='seperator')&&(x[i+1].classname=='seperator')){
 						x[i].remove()
 						objcount--
 					}
