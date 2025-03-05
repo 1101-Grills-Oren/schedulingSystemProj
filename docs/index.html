@@ -982,7 +982,7 @@
 			dateInternal.setHours(0,0,0,0)
 			dateInternal.setFullYear(week[0]-0,0,0)
 			dateInternal.setTime(dateInternal.getTime()+(7*24*60*60*1000)*(week[1]-0))
-			dateInternal.setTime(dateInternal.getTime()-(24*60*60*1000)*(dateInternal.getDay()))
+			dateInternal.setTime(dateInternal.getTime()-(24*60*60*1000)*(dateInternal.getDay()+1))
 			obj.lastTrigger=dateInternal.getTime()
 			obj.triggerDelay=7*24*60*60*1000
 			dateInternal.setHours(time.split(':')[0],time.split(':')[1],0,0)
